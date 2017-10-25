@@ -62,7 +62,7 @@ sensitive, ...).
 If the 'C' (compressed) instruction set extension is targeted, the compiler 
 will generate compressed instructions where possible.
 
-Points for consideration:
+### Issues for consideration
 * Whether `riscv32` and `riscv64` should be accepted as synonyms for `rv32` 
 and `rv64`.
 * Whether the `-march` string should be parsed case insensitively.
@@ -106,7 +106,7 @@ for rv64imaf and so on. TODO: doesn't seem to do this. GCC bug?
 An error will be produced for impossible combinations of `-march` and `-mabi`, 
 such as `-march=rv32i` and `-mabi=ilp32f`.
 
-Points for consideration:
+### Issues for consideration
 * Should the `-mabi` string be parsed case insensitively?
 * How should the RV32E ABI be specified? ilp32e?
 
@@ -125,7 +125,7 @@ generate addresses.
 
 TODO: interaction with PIC.
 
-Points for consideration:
+### Issues for consideration
 * It has been proposed to deprecate the `medlow` code model and rename 
 `medany` to `medium`.
 
@@ -148,7 +148,7 @@ Perhaps surprisingly, the disassembler will default to hiding the difference
 between compressed (16-bit) instructions and their 32-bit equivalent. e.g.
 `c.addi sp, -16` will be printed as `addi sp, sp, -16`.
 
-Points for consideration:
+### Issues for consideration
 * The current GNU objdump behaviour will not provide useful results for cases 
 where non-standard extensions are implemented which reuse some of the standard 
 extension's encoding space. Making RISC-V ELF files self-describing (as 
@@ -168,7 +168,7 @@ The assembler will produce compressed instructions whenever possible if the
 targeted RISC-V variant includes support for the 'C' compressed instruction 
 set.
 
-Points for consideration:
+### Issues for consideration
 * There is currently no way to enable support for the C ISA extension, but to 
 disable the automatic 'compression' of instructions.
 
@@ -196,7 +196,7 @@ when targeting 'FD'.
 `-mno-fdiv` has not been used.
 * `__riscv_compressed`: defined when targeting the 'C' ISA extension.
 
-Points for consideration:
+### Issues for consideration
 * What should the naming convention be for defines that indicate support for 
 non-standard extensions?
 * What additional information could/should be exposed via preprocessor 
