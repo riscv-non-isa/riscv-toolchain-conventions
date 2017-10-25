@@ -1,0 +1,219 @@
+# RISC-V Toolchain Conventions
+
+## Copyright and license information
+
+This document is authored by:
+* Alex Bradbury <asb@lowrisc.org>.
+
+Licensed under the Creative Commons Attribution 4.0 International License 
+(CC-BY 4.0). The full license text is available at 
+https://creativecommons.org/licenses/by/4.0/.
+
+## Aims
+
+This effort aims to document the expected behaviour and command-line interface 
+of RISC-V toolchains. In doing so, we can provide an avenue for members of the 
+GNU and LLVM communities to collaborate on standardising and extending these 
+conventions. A diverse range of RISC-V implementations and custom extensions 
+will inevitably result in vendor-specific toolchains being created and 
+distributed. By describing a clear preferred path for exposing vendor-specific 
+extensions or modifications, we can try to increase the likelihood that these 
+vendor toolchain distributions have a common interface and aren't gratuitously 
+different.
+
+## Status and roadmap
+
+This document is a work-in-progress, and contains many sections that serve 
+mainly to enumerate current gaps or oddities. The plan is to seek feedback and 
+further develop the proposal with the help of the RISC-V community, then to 
+seek input from the wider GCC and Clang developer communities for extensions 
+or changes beyond the current set of command-line options supported by GCC.
+
+See the [issues 
+list](https://github.com/lowRISC/riscv-toolchain-conventions/issues) to 
+discuss any of the problems or TODO items described in this document.
+
+This document is currently targeted at toolchain implementers and developers, 
+but over time we hope it will also become a useful reference for RISC-V 
+toolchain users.
+
+## See also
+* [RISC-V user-level ISA specification](https://riscv.org/specifications/)
+* [RISC-V ELF psABI 
+specification](https://github.com/riscv/riscv-elf-psabi-doc/blob/master/riscv-elf.md)
+* [RISC-V Assembly Programmer's 
+Manual](https://github.com/riscv/riscv-asm-manual/blob/master/riscv-asm.md)
+* [GCC RISC-V option 
+documentation](https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html)
+
+## Specifying the target ISA with -march
+
+The compiler and assembler both accept the `-march` flag to specify the target 
+ISA, e.g. "rv32imafd". The abbreviation "g" can be used to represent the IMAFD 
+base and extensions, e.g. `-march=rv64g`. A target `-march` which includes 
+floating point instructions implies a hardfloat calling convention, but can be 
+overridden using the `-mabi` flag (see the next section).
+
+The ISA subset naming conventions are described in Chapter 22 of the RISC-V 
+user-level ISA specification. However, tools do not currently follow this 
+specification (no support for parsing version specifiers, input is case 
+sensitive, ...).
+
+If the 'C' (compressed) instruction set extension is targeted, the compiler 
+will generate compressed instructions where possible.
+
+Points for consideration:
+* Whether `riscv32` and `riscv64` should be accepted as synonyms for `rv32` 
+and `rv64`.
+* Whether the `-march` string should be parsed case insensitively.
+* Exposing the ability to specify version numbers for a target extension.
+* Specifying non-standard extensions. The ISA specification suggests naming 
+such as `rv32gXfirstext_Xsecondext`. In GCC or Clang it would be more 
+conventional to give a string such as `rv32g+firstext+secondext`.
+* How to specify more fine-grained information about a target. e.g. an RV32I 
+target that implements only M-mode and doesn't support the `rdcycle` 
+instruction, or an RV32IM target that doesn't support the division 
+instructions.
+* Whether ordering should be enforced on the ISA string (e.g. currently 
+`rv32imafd` is accepted by GCC but `rv32iamfd` is not).
+
+## Specifying the target ABI with -mabi
+
+RISC-V compilers support the following ABIs, which can be specified using 
+`-mabi`:
+
+* `ilp32`: int, long, pointers are 32-bit. GPRs and the stack are used for 
+parameter passing.
+* `ilp32f`: int, long, pointers are 32-bit. GPRs, 32-bit FPRs, and the stack 
+are used for parameter passing.
+* `ilp32d`: int, long, pointers are 32-bit. GPRs, 64-bit FPRs and the stack 
+are used for parameter passing.
+* `lp64`: long, pointers are 64-bit. GPRs and the the stack are used for 
+parameter passing.
+* `lp64f`: long, pointers are 64-bit. GPRs, 32-bit FPRs, and the stack are 
+used for parameter passing.
+* `lp64d`: long, pointers are 64-bit. GPRs, 64-bit FPRs, and the stack are 
+used for parameter passing.
+
+See the [RISC-V ELF 
+psABI](https://github.com/riscv/riscv-elf-psabi-doc/blob/master/riscv-elf.md) 
+for more information on these ABIs.
+
+Unless overridden with an explicit `-mabi` argument, the "natural" calling 
+convention is selected based on the `-march` string: ilp32 for rv32i, lp64f 
+for rv64imaf and so on. TODO: doesn't seem to do this. GCC bug?
+
+An error will be produced for impossible combinations of `-march` and `-mabi`, 
+such as `-march=rv32i` and `-mabi=ilp32f`.
+
+Points for consideration:
+* Should the `-mabi` string be parsed case insensitively?
+* How should the RV32E ABI be specified? ilp32e?
+
+## Specifying the target code model with -mcmodel
+
+The target code model indicates constraints on symbols which the compiler can 
+exploit these constraints to generate more efficient code. Two code models are 
+currently defined for RISC-V:
+
+* `-mcmodel=medlow`. The program and its statically defined symbols must lie 
+within a single 2GiB address range, between the absolute addresses -2GiB and 
++2GiB. `lui` and `addi` pairs are used to generate addresses.
+* `-mcmodel=medany`. The program and its statically defined symbols must lie 
+within a single 4GiB address range. `auipc` and `addi` pairs are used to 
+generate addresses.
+
+TODO: interaction with PIC.
+
+Points for consideration:
+* It has been proposed to deprecate the `medlow` code model and rename 
+`medany` to `medium`.
+
+## Disassembler (objdump) behaviour
+
+A RISC-V ELF binary is not currently self-describing, in the sense that it 
+doesn't contain enough information to determine which variant of the RISC-V 
+architecture is being targeted. GNU objdump will currently attempt disassemble 
+any instruction whose encoding matches one of the standard RV32/RV64 IMAFDC 
+extensions.
+
+objdump will default to showing pseudoinstructions and ABI register names. The 
+`numeric` disassembler argument can be used to use architectural register 
+names such as `x10`, while the `no-aliases` disassembler argument will ensure 
+only canonical instructions rather than pseudoinstructions or aliases are 
+printed. These arguments are specified using `-M`, e.g. `-M numeric` or `-M 
+numeric,no-aliases`.
+
+Perhaps surprisingly, the disassembler will default to hiding the difference 
+between compressed (16-bit) instructions and their 32-bit equivalent. e.g.
+`c.addi sp, -16` will be printed as `addi sp, sp, -16`.
+
+Points for consideration:
+* The current GNU objdump behaviour will not provide useful results for cases 
+where non-standard extensions are implemented which reuse some of the standard 
+extension's encoding space. Making RISC-V ELF files self-describing (as 
+discussed [here](https://github.com/riscv/riscv-elf-psabi-doc/pull/47)) would 
+avoid this problem.
+* Would it be useful to have separate flags that control the printing of 
+pseudoinstructions and whether compressed instructions are printed directly or 
+not?
+
+## Assembler behaviour
+
+See the [RISC-V Assembly Programmer's 
+Manual](https://github.com/riscv/riscv-asm-manual/blob/master/riscv-asm.md) 
+for details on the syntax accepted by the assembler.
+
+The assembler will produce compressed instructions whenever possible if the 
+targeted RISC-V variant includes support for the 'C' compressed instruction 
+set.
+
+Points for consideration:
+* There is currently no way to enable support for the C ISA extension, but to 
+disable the automatic 'compression' of instructions.
+
+## C/C++ preprocessor definitions
+
+* `__riscv`: defined for any RISC-V target. Older versions of the GCC 
+toolchain defined `__riscv__`.
+* `__riscv_xlen`: 32 for RV32 and 64 for RV64.
+* `__riscv_float_abi_soft`, `__riscv_float_abi_single`, 
+`__riscv_float_abi_double`: one of these three will be defined, depending on 
+target ABI.
+* `__riscv_cmodel_medlow`, `__riscv_cmodel_medany`: one of these two will be 
+defined, depending on the target code model.
+* `__riscv_mul`: defined when targeting the 'M' ISA extension.
+* `__riscv_muldiv`: defined when targeting the 'M' ISA extension and 
+`-mno-div` has not been used.
+* `__riscv_div`: defined when targeting the 'M' ISA extension and `-mno-div` 
+has not been used.
+* `__riscv_atomic`: defined when targeting the 'A' ISA extension.
+* `__riscv_flen`: 32 when targeting the 'F' ISA extension (but not 'D') and 64 
+when targeting 'FD'.
+* `__riscv_fdiv`: defined when targeting the 'F' or 'D' ISA extensions and 
+`-mno-fdiv` has not been used.
+* `__riscv_fsqrt`: defined when targeting the 'F' or 'D' ISA extensions and 
+`-mno-fdiv` has not been used.
+* `__riscv_compressed`: defined when targeting the 'C' ISA extension.
+
+Points for consideration:
+* What should the naming convention be for defines that indicate support for 
+non-standard extensions?
+* What additional information could/should be exposed via preprocessor 
+defines?
+
+## Specifying stack alignment
+
+The default stack alignment is 16 bytes in RV32I and RV64I, and 4 bytes on 
+RV32E. There is not currently a way to specify an alternative stack alignment, 
+but the `-mpreferred-stack-boundary` and `-mincoming-stack-boundary` flags 
+supported by GCC on X86 could be adopted.
+
+## TODO
+
+* mdiv, mno-div, mfdiv, mno-fdiv, msave-restore, mno-save-restore, 
+mstrict-align, mno-strict-align, -mexplicit-relocs, -mno-explicit-relocs
+
+## Appendix: Exposing a vendor-specific extension across the toolchain
+
+TODO.
