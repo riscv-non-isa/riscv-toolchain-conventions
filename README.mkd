@@ -99,11 +99,13 @@ See the [RISC-V ELF
 psABI](https://github.com/riscv/riscv-elf-psabi-doc/blob/master/riscv-elf.md) 
 for more information on these ABIs.
 
-Unless overridden with an explicit `-mabi` argument, the "natural" calling 
-convention is selected based on the `-march` string: ilp32 for rv32i, lp64f 
-for rv64imaf and so on. TODO: doesn't seem to do this. GCC bug?
+The GCC documentation indicates that unless overridden with an explicit 
+`-mabi` argument, the "natural" calling convention is selected based on the 
+`-march` string: ilp32 for rv32i, lp64f for rv64imaf and so on. However it 
+doesn't currently do this, see
+[Bug 82717](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82717).
 
-An error will be produced for impossible combinations of `-march` and `-mabi`, 
+An error will be produced for impossible combinations of `-march` and `-mabi`
 such as `-march=rv32i` and `-mabi=ilp32f`.
 
 ### Issues for consideration
