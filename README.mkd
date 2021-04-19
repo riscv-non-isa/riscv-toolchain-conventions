@@ -207,6 +207,28 @@ RV32E. There is not currently a way to specify an alternative stack alignment,
 but the `-mpreferred-stack-boundary` and `-mincoming-stack-boundary` flags 
 supported by GCC on X86 could be adopted.
 
+## Save restore support
+
+The save restore optimization is enabled through the option `-msave-restore`
+and reduces the amount of code in the prologue and epilogue by using
+library functions instead of inline code to save and restore callee saved
+registers. The library functions are provided in the emulation library and
+have the following signatures:
+
+* `void __riscv_save_<N>(void)`
+* `void __riscv_restore_<N>(void)`
+
+`<N>` is a value between 0 and 12 and corresponds to the number of
+registers between `s0` and `s11` that are saved/restored. The return
+address register `ra` is always included in the registers saved and restored.
+
+The `__riscv_save_<N>` functions are called from the prologue, using `t0` as
+the link register to avoid clobbering `ra`. They allocate stack space for the
+registers and then save `ra` and the appropriate number of registers from
+`s0`-`s11`. The `__riscv_restore_<N>` functions are tail-called from the
+epilogue. They restore the saved registers, deallocate the stack space for the
+register, and then perform a return through the restored value of `ra`.
+
 ## TODO
 
 * mdiv, mno-div, mfdiv, mno-fdiv, msave-restore, mno-save-restore, 
