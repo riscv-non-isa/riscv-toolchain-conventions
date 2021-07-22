@@ -156,6 +156,31 @@ avoid this problem.
 pseudoinstructions and whether compressed instructions are printed directly or 
 not?
 
+## Linker behaviour
+
+The RISC-V architecture supports multiple ABI conventions. Some of them are
+incompatible with one another. Two particular cases of such irreconcilable
+differencces are the floating point passing convention and whether ILP32E
+calling convention (RVE) is in use. In order to identify (ELF) object files
+built with these ABI constraints, the `e_flags` field in the ELF header contains
+a flag set to indicate the ABI in use. The details of the flag can be found in
+the [RISCV
+psABI](https://github.com/riscv/riscv-elf-psabi-doc/blob/master/riscv-elf.md#file-header).
+
+The linker can detect a mismatch of the ABI and indicate to the developer of the
+conflict. A mismatch should be flagged as an irrecoverable error. However,
+because the impact of the calling convention is limited to the code
+contributions of an object file, any empty object file (i.e. containing no
+sections) or any object file which does not contribute any text sections which
+are loaded at runtime shall be excluded from the requirement that the floating
+point passing convention and the use of RVE match across all the object files.
+
+### Issues for consideration
+* If there is a usecase for multiple floating point passing conventions to be
+used in a single compiled image, it may be useful to consider lifting the
+restriction that the floating point calling convention shall match across all
+object files.
+
 ## Assembler behaviour
 
 See the [RISC-V Assembly Programmer's 
