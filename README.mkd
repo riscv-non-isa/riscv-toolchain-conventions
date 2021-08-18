@@ -127,6 +127,23 @@ TODO: interaction with PIC.
 * It has been proposed to deprecate the `medlow` code model and rename 
 `medany` to `medium`.
 
+## Specifying specification version that is not encoded in ISA string.
+
+RISC-V having ISA string to represent enabled extensions and corresponding
+versions, ideally we can use that as an universal scheme, but not all
+specification are encoded in ISA string, like debug specification and privilege
+specification, so we have defined following flags to control individual
+versions:
+
+- `-mpriv-spec=`: Specify version for privilege specification.
+- `-mdebug-spec=`: Specify version for debug specification.
+
+The argument of the option is the version number which is composed by number
+and dot, e.g. `-mpriv-spec=1.9`, `-mpriv-spec=1.10` or `-mdebug-spec=0.13`
+
+NOTE: Toolchain may not support every version.
+
+
 ## Disassembler (objdump) behaviour
 
 A RISC-V ELF binary is not currently self-describing, in the sense that it 
