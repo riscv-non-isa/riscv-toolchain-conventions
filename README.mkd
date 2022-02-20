@@ -30,7 +30,7 @@ seek input from the wider GCC and Clang developer communities for extensions
 or changes beyond the current set of command-line options supported by GCC.
 
 See the [issues 
-list](https://github.com/lowRISC/riscv-toolchain-conventions/issues) to 
+list](https://github.com/riscv-non-isa/riscv-toolchain-conventions/issues) to 
 discuss any of the problems or TODO items described in this document.
 
 This document is currently targeted at toolchain implementers and developers, 
@@ -38,11 +38,11 @@ but over time we hope it will also become a useful reference for RISC-V
 toolchain users.
 
 ## See also
-* [RISC-V user-level ISA specification](https://riscv.org/specifications/)
+* [RISC-V user-level ISA specification](https://riscv.org/technical/specifications/)
 * [RISC-V ELF psABI 
-specification](https://github.com/riscv/riscv-elf-psabi-doc/blob/master/riscv-elf.md)
+specification](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc)
 * [RISC-V Assembly Programmer's 
-Manual](https://github.com/riscv/riscv-asm-manual/blob/master/riscv-asm.md)
+Manual](https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md)
 * [GCC RISC-V option 
 documentation](https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html)
 
@@ -96,7 +96,7 @@ used for parameter passing.
 used for parameter passing.
 
 See the [RISC-V ELF 
-psABI](https://github.com/riscv/riscv-elf-psabi-doc/blob/master/riscv-elf.md) 
+psABI](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc) 
 for more information on these ABIs.
 
 The default value for `-mabi` is system dependent. For cross-compilation, both
@@ -150,7 +150,7 @@ between compressed (16-bit) instructions and their 32-bit equivalent. e.g.
 * The current GNU objdump behaviour will not provide useful results for cases 
 where non-standard extensions are implemented which reuse some of the standard 
 extension's encoding space. Making RISC-V ELF files self-describing (as 
-discussed [here](https://github.com/riscv/riscv-elf-psabi-doc/pull/47)) would 
+discussed [here](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/pull/47)) would 
 avoid this problem.
 * Would it be useful to have separate flags that control the printing of 
 pseudoinstructions and whether compressed instructions are printed directly or 
@@ -159,7 +159,7 @@ not?
 ## Assembler behaviour
 
 See the [RISC-V Assembly Programmer's 
-Manual](https://github.com/riscv/riscv-asm-manual/blob/master/riscv-asm.md) 
+Manual](https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md) 
 for details on the syntax accepted by the assembler.
 
 The assembler will produce compressed instructions whenever possible if the 
