@@ -73,10 +73,6 @@ and `rv64`.
 * Specifying non-standard extensions. The ISA specification suggests naming 
 such as `rv32gXfirstext_Xsecondext`. In GCC or Clang it would be more 
 conventional to give a string such as `rv32g+firstext+secondext`.
-* How to specify more fine-grained information about a target. e.g. an RV32I 
-target that implements only M-mode and doesn't support the `rdcycle` 
-instruction, or an RV32IM target that doesn't support the division 
-instructions.
 * Whether ordering should be enforced on the ISA string (e.g. currently 
 `rv32imafd` is accepted by GCC but `rv32iamfd` is not).
 
