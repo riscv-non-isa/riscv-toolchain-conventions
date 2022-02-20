@@ -50,10 +50,12 @@ documentation](https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html)
 ## Specifying the target ISA with -march
 
 The compiler and assembler both accept the `-march` flag to specify the target 
-ISA, e.g. "rv32imafd". The abbreviation "g" can be used to represent the IMAFD 
-base and extensions, e.g. `-march=rv64g`. A target `-march` which includes 
-floating point instructions implies a hardfloat calling convention, but can be 
-overridden using the `-mabi` flag (see the next section).
+ISA, e.g. "rv32imafd". The abbreviation "g" can be used to represent either 
+`IMAFD` (when targeting RISC-V ISA specification version 2.2 or earlier) or 
+`IMAFD_Zicsr_Zifencei` (version 20190608 or later) base and extensions, 
+e.g. `-march=rv64g`. A target `-march` which includes floating point 
+instructions implies a hardfloat calling convention, but can be overridden 
+using the `-mabi` flag (see the next section).
 
 The ISA subset naming conventions are described in Chapter 27 of the RISC-V 
 user-level ISA specification. However, tools do not currently follow this 
