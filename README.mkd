@@ -39,6 +39,7 @@ toolchain users.
 
 ## See also
 * [RISC-V user-level ISA specification](https://riscv.org/technical/specifications/)
+  (Document Version 20191213)
 * [RISC-V ELF psABI 
 specification](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc)
 * [RISC-V Assembly Programmer's 
@@ -54,7 +55,7 @@ base and extensions, e.g. `-march=rv64g`. A target `-march` which includes
 floating point instructions implies a hardfloat calling convention, but can be 
 overridden using the `-mabi` flag (see the next section).
 
-The ISA subset naming conventions are described in Chapter 22 of the RISC-V 
+The ISA subset naming conventions are described in Chapter 27 of the RISC-V 
 user-level ISA specification. However, tools do not currently follow this 
 specification (no support for parsing version specifiers, input is case 
 sensitive, ...).
