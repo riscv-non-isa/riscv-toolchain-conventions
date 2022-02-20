@@ -59,8 +59,7 @@ using the `-mabi` flag (see the next section).
 
 The ISA subset naming conventions are described in Chapter 27 of the RISC-V 
 user-level ISA specification. However, tools do not currently follow this 
-specification (no support for parsing version specifiers, input is case 
-sensitive, ...).
+specification (input is case sensitive, ...).
 
 If the 'C' (compressed) instruction set extension is targeted, the compiler 
 will generate compressed instructions where possible.
