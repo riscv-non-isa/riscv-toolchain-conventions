@@ -247,12 +247,11 @@ when the option `-mllvm -save-restore-tailcall` is specified.
 Support for custom instruction set extensions are an important part of RISC-V,
 with large encoding spaces reserved of vendor extensions.
 
-However, there are no official guidelines on how to use this encoding space or
-on naming the mnemonics. This section defines guidelines which vendors are
-expected to follow if upstreaming support for their extensions. Although
-vendor-provided toolchains are free to make different choices, they are strongly
-urged to align with these guidelines in order to ensure there is a straightforward
-path for upstreaming in the future.
+However, there are no official guidelines on naming the mnemonics. This section
+defines guidelines which vendors are expected to follow if upstreaming support
+for their extensions. Although vendor-provided toolchains are free to make
+different choices, they are strongly urged to align with these guidelines in
+order to ensure there is a straightforward path for upstreaming in the future.
 
 ### Vendor extension naming scheme
 
