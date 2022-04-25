@@ -281,6 +281,10 @@ in the ratified base ISA and extensions (e.g. the use of 'w', 'd',
 
 The vendor suffix requires at least two letters.
 
+NOTE: Although no centralized registration is required, vendors should add the
+vendor prefix to the table *IF* vendors are interested to upstream their
+extension to open source toolchain like LLVM or GNU toolchain.
+
 ### List of vendor prefixes
 
 
