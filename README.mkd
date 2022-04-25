@@ -258,8 +258,8 @@ order to ensure there is a straightforward path for upstreaming in the future.
 According to the RISC-V ISA spec, non-standard extensions are named using a single `x`
 followed by an alphabetical name and an optional version number.
 
-To make it easier to identify and prevent naming conflict, vendor extensions must start
-with a vendor name, which could be an abbreviation of the full name.
+To make it easier to identify and prevent naming conflict, vendor extensions
+should start with a vendor name, which could be an abbreviation of the full name.
 
 For example:
 - `XVentanaCondOps` from Ventana
