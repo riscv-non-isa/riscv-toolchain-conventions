@@ -279,6 +279,8 @@ Vendors should also aim to follow the conventions used for naming mnemonics
 in the ratified base ISA and extensions (e.g. the use of 'w', 'd',
 'u', and 's' suffixes).
 
+The vendor suffix requires at least two letters.
+
 ### List of vendor prefixes
 
 
