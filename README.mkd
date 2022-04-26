@@ -295,11 +295,16 @@ Vendor                 | Prefix          | URL
 SiFive                 | sf              | https://www.sifive.com/
 Ventana Micro Systems  | vf              | https://www.ventanamicro.com/
 
+NOTE: Vendor prefixes are case-insensitive.
+
 ### List of vendor extension
 
 Vendor  | Name            | Version        | ISA Document
 :------ | :-------------- | :------------- | :---------------
 Ventana | XVentanaCondOps | 1.0            | [VTx-family custom instructions](https://github.com/ventanamicro/ventana-custom-extensions/releases/download/v1.0.0/ventana-custom-extensions-v1.0.0.pdf)
+
+NOTE: Vendor extension names are case-insensitive, CamelCase is used here
+for readability.
 
 ## TODO
 
