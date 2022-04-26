@@ -253,6 +253,9 @@ for their extensions. Although vendor-provided toolchains are free to make
 different choices, they are strongly urged to align with these guidelines in
 order to ensure there is a straightforward path for upstreaming in the future.
 
+NOTE: Open source toolchain maintainer has final say on accepting vendor
+extension, comply with this conventions isn't guarantee upstream will accept.
+
 ### Vendor extension naming scheme
 
 According to the RISC-V ISA spec, non-standard extensions are named using a single `x`
