@@ -264,7 +264,6 @@ should start with a vendor name, which could be an abbreviation of the full name
 For example:
 - `XVentanaCondOps` from Ventana
 - `Xsfcflushdlone` from SiFive
-- `Xtheade` from T-head
 
 ### Assembly mnemonic
 
