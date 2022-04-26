@@ -274,14 +274,14 @@ In order to avoid confusion between standard extension and other vendor
 extensions, instruction mnemonics from vendor extensions must have a
 prefix corresponding to the vendor's name.
 
+The vendor prefix should be at least two letters long
+
 e.g. `sf.` for SiFive, `vt.` for Ventana. No central registration with RISC-V
 International or elsewhere is required before the prefix is used.
 
 Vendors should also aim to follow the conventions used for naming mnemonics
 in the ratified base ISA and extensions (e.g. the use of 'w', 'd',
 'u', and 's' suffixes).
-
-The vendor prefix requires at least two letters.
 
 NOTE: Although no centralized registration is required, vendors should add the
 vendor prefix to the table *IF* vendors are interested to upstream their
