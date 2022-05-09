@@ -30,7 +30,7 @@ seek input from the wider GCC and Clang developer communities for extensions
 or changes beyond the current set of command-line options supported by GCC.
 
 See the [issues 
-list](https://github.com/lowRISC/riscv-toolchain-conventions/issues) to 
+list](https://github.com/riscv-non-isa/riscv-toolchain-conventions/issues) to 
 discuss any of the problems or TODO items described in this document.
 
 This document is currently targeted at toolchain implementers and developers, 
@@ -38,26 +38,28 @@ but over time we hope it will also become a useful reference for RISC-V
 toolchain users.
 
 ## See also
-* [RISC-V user-level ISA specification](https://riscv.org/specifications/)
+* [RISC-V user-level ISA specification](https://riscv.org/technical/specifications/)
+  (Document Version 20191213)
 * [RISC-V ELF psABI 
-specification](https://github.com/riscv/riscv-elf-psabi-doc/blob/master/riscv-elf.md)
+specification](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc)
 * [RISC-V Assembly Programmer's 
-Manual](https://github.com/riscv/riscv-asm-manual/blob/master/riscv-asm.md)
+Manual](https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md)
 * [GCC RISC-V option 
 documentation](https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html)
 
 ## Specifying the target ISA with -march
 
 The compiler and assembler both accept the `-march` flag to specify the target 
-ISA, e.g. "rv32imafd". The abbreviation "g" can be used to represent the IMAFD 
-base and extensions, e.g. `-march=rv64g`. A target `-march` which includes 
-floating point instructions implies a hardfloat calling convention, but can be 
-overridden using the `-mabi` flag (see the next section).
+ISA, e.g. "rv32imafd". The abbreviation "g" can be used to represent either 
+`IMAFD` (when targeting RISC-V ISA specification version 2.2 or earlier) or 
+`IMAFD_Zicsr_Zifencei` (version 20190608 or later) base and extensions, 
+e.g. `-march=rv64g`. A target `-march` which includes floating point 
+instructions implies a hardfloat calling convention, but can be overridden 
+using the `-mabi` flag (see the next section).
 
-The ISA subset naming conventions are described in Chapter 22 of the RISC-V 
+The ISA subset naming conventions are described in Chapter 27 of the RISC-V 
 user-level ISA specification. However, tools do not currently follow this 
-specification (no support for parsing version specifiers, input is case 
-sensitive, ...).
+specification (input is case sensitive, ...).
 
 If the 'C' (compressed) instruction set extension is targeted, the compiler 
 will generate compressed instructions where possible.
@@ -70,10 +72,6 @@ and `rv64`.
 * Specifying non-standard extensions. The ISA specification suggests naming 
 such as `rv32gXfirstext_Xsecondext`. In GCC or Clang it would be more 
 conventional to give a string such as `rv32g+firstext+secondext`.
-* How to specify more fine-grained information about a target. e.g. an RV32I 
-target that implements only M-mode and doesn't support the `rdcycle` 
-instruction, or an RV32IM target that doesn't support the division 
-instructions.
 * Whether ordering should be enforced on the ISA string (e.g. currently 
 `rv32imafd` is accepted by GCC but `rv32iamfd` is not).
 
@@ -96,7 +94,7 @@ used for parameter passing.
 used for parameter passing.
 
 See the [RISC-V ELF 
-psABI](https://github.com/riscv/riscv-elf-psabi-doc/blob/master/riscv-elf.md) 
+psABI](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc) 
 for more information on these ABIs.
 
 The default value for `-mabi` is system dependent. For cross-compilation, both
@@ -132,7 +130,7 @@ TODO: interaction with PIC.
 A RISC-V ELF binary is not currently self-describing, in the sense that it 
 doesn't contain enough information to determine which variant of the RISC-V 
 architecture is being targeted. GNU objdump will currently attempt disassemble 
-any instruction whose encoding matches one of the standard RV32/RV64 IMAFDC 
+any instruction whose encoding matches one of the standard RV32/RV64GC 
 extensions.
 
 objdump will default to showing pseudoinstructions and ABI register names. The 
@@ -150,7 +148,7 @@ between compressed (16-bit) instructions and their 32-bit equivalent. e.g.
 * The current GNU objdump behaviour will not provide useful results for cases 
 where non-standard extensions are implemented which reuse some of the standard 
 extension's encoding space. Making RISC-V ELF files self-describing (as 
-discussed [here](https://github.com/riscv/riscv-elf-psabi-doc/pull/47)) would 
+discussed [here](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/pull/47)) would 
 avoid this problem.
 * Would it be useful to have separate flags that control the printing of 
 pseudoinstructions and whether compressed instructions are printed directly or 
@@ -159,7 +157,7 @@ not?
 ## Assembler behaviour
 
 See the [RISC-V Assembly Programmer's 
-Manual](https://github.com/riscv/riscv-asm-manual/blob/master/riscv-asm.md) 
+Manual](https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md) 
 for details on the syntax accepted by the assembler.
 
 The assembler will produce compressed instructions whenever possible if the 
