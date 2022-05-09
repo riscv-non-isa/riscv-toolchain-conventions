@@ -291,7 +291,7 @@ in the ratified base ISA and extensions (e.g. the use of 'w', 'd',
 Vendor                 | Prefix          | URL
 :--------------------- | :-------------- | :-------------
 SiFive                 | sf              | https://www.sifive.com/
-Ventana Micro Systems  | vf              | https://www.ventanamicro.com/
+Ventana Micro Systems  | vt              | https://www.ventanamicro.com/
 
 NOTE: Vendor prefixes are case-insensitive.
 
