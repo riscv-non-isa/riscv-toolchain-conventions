@@ -80,18 +80,24 @@ conventional to give a string such as `rv32g+firstext+secondext`.
 RISC-V compilers support the following ABIs, which can be specified using 
 `-mabi`:
 
-* `ilp32`: int, long, pointers are 32-bit. GPRs and the stack are used for 
-parameter passing.
-* `ilp32f`: int, long, pointers are 32-bit. GPRs, 32-bit FPRs, and the stack 
-are used for parameter passing.
-* `ilp32d`: int, long, pointers are 32-bit. GPRs, 64-bit FPRs and the stack 
-are used for parameter passing.
-* `lp64`: long, pointers are 64-bit. GPRs and the the stack are used for 
-parameter passing.
-* `lp64f`: long, pointers are 64-bit. GPRs, 32-bit FPRs, and the stack are 
-used for parameter passing.
-* `lp64d`: long, pointers are 64-bit. GPRs, 64-bit FPRs, and the stack are 
-used for parameter passing.
+* [`ilp32`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32): 
+  int, long, pointers are 32-bit. GPRs and the stack are used for 
+  parameter passing.
+* [`ilp32f`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32f): 
+  int, long, pointers are 32-bit. GPRs, 32-bit FPRs, and the stack are 
+  used for parameter passing.
+* [`ilp32d`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32d): 
+  int, long, pointers are 32-bit. GPRs, 64-bit FPRs and the stack are 
+  used for parameter passing.
+* [`lp64`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-lp64): 
+  long, pointers are 64-bit. GPRs and the the stack are used for 
+  parameter passing.
+* [`lp64f`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-lp64f): 
+  long, pointers are 64-bit. GPRs, 32-bit FPRs, and the stack are used for 
+  parameter passing.
+* [`lp64d`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-lp64d): 
+  long, pointers are 64-bit. GPRs, 64-bit FPRs, and the stack are used for 
+  parameter passing.
 
 See the [RISC-V ELF 
 psABI](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc) 
