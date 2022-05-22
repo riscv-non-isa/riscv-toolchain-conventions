@@ -50,7 +50,7 @@ documentation](https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html)
 ## Specifying the target ISA with -march
 
 The compiler and assembler both accept the `-march` flag to specify the target 
-ISA, e.g. "rv32imafd". The abbreviation "g" can be used to represent either 
+ISA, e.g. `rv32imafd`. The abbreviation `g` can be used to represent either 
 `IMAFD` (when targeting RISC-V ISA specification version 2.2 or earlier) or 
 `IMAFD_Zicsr_Zifencei` (version 20190608 or later) base and extensions, 
 e.g. `-march=rv64g`. A target `-march` which includes floating point 
@@ -104,7 +104,7 @@ impossible combinations of `-march` and `-mabi` such as `-march=rv32i` and
 
 ### Issues for consideration
 * Should the `-mabi` string be parsed case insensitively?
-* How should the RV32E ABI be specified? ilp32e?
+* How should the RV32E ABI be specified? `ilp32e`?
 
 ## Specifying the target code model with -mcmodel
 
@@ -165,7 +165,7 @@ targeted RISC-V variant includes support for the 'C' compressed instruction
 set.
 
 ### Issues for consideration
-* There is currently no way to enable support for the C ISA extension, but to 
+* There is currently no way to enable support for the 'C' ISA extension, but to 
 disable the automatic 'compression' of instructions.
 
 ## C/C++ preprocessor definitions
@@ -306,8 +306,9 @@ for readability.
 
 ## TODO
 
-* mdiv, mno-div, mfdiv, mno-fdiv, msave-restore, mno-save-restore, 
-mstrict-align, mno-strict-align, -mexplicit-relocs, -mno-explicit-relocs
+* `-mdiv`, `-mno-div`, `-mfdiv`, `-mno-fdiv`, `-msave-restore`, 
+  `-mno-save-restore`, `-mstrict-align`, `-mno-strict-align`, 
+  `-mexplicit-relocs`, `-mno-explicit-relocs`
 
 ## Appendix: Exposing a vendor-specific extension across the toolchain
 
