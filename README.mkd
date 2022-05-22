@@ -256,7 +256,7 @@ extension, comply with this conventions isn't guarantee upstream will accept.
 
 ### Vendor extension naming scheme
 
-According to the RISC-V ISA spec, non-standard extensions are named using a single `x`
+According to the RISC-V ISA spec, non-standard extensions are named using a single `X`
 followed by an alphabetical name and an optional version number.
 
 To make it easier to identify and prevent naming conflict, vendor extensions
