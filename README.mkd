@@ -50,7 +50,7 @@ documentation](https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html)
 ## Specifying the target ISA with -march
 
 The compiler and assembler both accept the `-march` flag to specify the target 
-ISA, e.g. "rv32imafd". The abbreviation "g" can be used to represent either 
+ISA, e.g. `rv32imafd`. The abbreviation `g` can be used to represent either 
 `IMAFD` (when targeting RISC-V ISA specification version 2.2 or earlier) or 
 `IMAFD_Zicsr_Zifencei` (version 20190608 or later) base and extensions, 
 e.g. `-march=rv64g`. A target `-march` which includes floating point 
@@ -80,18 +80,24 @@ conventional to give a string such as `rv32g+firstext+secondext`.
 RISC-V compilers support the following ABIs, which can be specified using 
 `-mabi`:
 
-* `ilp32`: int, long, pointers are 32-bit. GPRs and the stack are used for 
-parameter passing.
-* `ilp32f`: int, long, pointers are 32-bit. GPRs, 32-bit FPRs, and the stack 
-are used for parameter passing.
-* `ilp32d`: int, long, pointers are 32-bit. GPRs, 64-bit FPRs and the stack 
-are used for parameter passing.
-* `lp64`: long, pointers are 64-bit. GPRs and the the stack are used for 
-parameter passing.
-* `lp64f`: long, pointers are 64-bit. GPRs, 32-bit FPRs, and the stack are 
-used for parameter passing.
-* `lp64d`: long, pointers are 64-bit. GPRs, 64-bit FPRs, and the stack are 
-used for parameter passing.
+* [`ilp32`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32): 
+  int, long, pointers are 32-bit. GPRs and the stack are used for 
+  parameter passing.
+* [`ilp32f`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32f): 
+  int, long, pointers are 32-bit. GPRs, 32-bit FPRs, and the stack are 
+  used for parameter passing.
+* [`ilp32d`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32d): 
+  int, long, pointers are 32-bit. GPRs, 64-bit FPRs and the stack are 
+  used for parameter passing.
+* [`lp64`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-lp64): 
+  long, pointers are 64-bit. GPRs and the the stack are used for 
+  parameter passing.
+* [`lp64f`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-lp64f): 
+  long, pointers are 64-bit. GPRs, 32-bit FPRs, and the stack are used for 
+  parameter passing.
+* [`lp64d`](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-lp64d): 
+  long, pointers are 64-bit. GPRs, 64-bit FPRs, and the stack are used for 
+  parameter passing.
 
 See the [RISC-V ELF 
 psABI](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc) 
@@ -104,7 +110,7 @@ impossible combinations of `-march` and `-mabi` such as `-march=rv32i` and
 
 ### Issues for consideration
 * Should the `-mabi` string be parsed case insensitively?
-* How should the RV32E ABI be specified? ilp32e?
+* How should the RV32E ABI be specified? `ilp32e`?
 
 ## Specifying the target code model with -mcmodel
 
@@ -165,7 +171,7 @@ targeted RISC-V variant includes support for the 'C' compressed instruction
 set.
 
 ### Issues for consideration
-* There is currently no way to enable support for the C ISA extension, but to 
+* There is currently no way to enable support for the 'C' ISA extension, but to 
 disable the automatic 'compression' of instructions.
 
 ## C/C++ preprocessor definitions
@@ -256,7 +262,7 @@ extension, comply with this conventions isn't guarantee upstream will accept.
 
 ### Vendor extension naming scheme
 
-According to the RISC-V ISA spec, non-standard extensions are named using a single `x`
+According to the RISC-V ISA spec, non-standard extensions are named using a single `X`
 followed by an alphabetical name and an optional version number.
 
 To make it easier to identify and prevent naming conflict, vendor extensions
@@ -306,8 +312,9 @@ for readability.
 
 ## TODO
 
-* mdiv, mno-div, mfdiv, mno-fdiv, msave-restore, mno-save-restore, 
-mstrict-align, mno-strict-align, -mexplicit-relocs, -mno-explicit-relocs
+* `-mdiv`, `-mno-div`, `-mfdiv`, `-mno-fdiv`, `-msave-restore`, 
+  `-mno-save-restore`, `-mstrict-align`, `-mno-strict-align`, 
+  `-mexplicit-relocs`, `-mno-explicit-relocs`
 
 ## Appendix: Exposing a vendor-specific extension across the toolchain
 
