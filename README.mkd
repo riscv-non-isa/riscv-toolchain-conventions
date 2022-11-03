@@ -307,15 +307,17 @@ NOTE: Vendor prefixes are case-insensitive.
 Vendor  | Name            | Version        | ISA Document
 :------ | :-------------- | :------------- | :---------------
 T-Head  | XTheadCmo       | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
-T-Head  | XTheadSync      | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
 T-Head  | XTheadBa        | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
 T-Head  | XTheadBb        | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
 T-Head  | XTheadBs        | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
 T-Head  | XTheadCondMov   | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
+T-Head  | XTheadFMemIdx   | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
+T-Head  | XTheadFmv       | 2.1.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.1.0/xthead-2022-11-07-2.1.0.pdf)
+T-Head  | XTheadInt       | 2.1.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.1.0/xthead-2022-11-07-2.1.0.pdf)
 T-Head  | XTheadMac       | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
 T-Head  | XTheadMemPair   | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
 T-Head  | XTheadMemIdx    | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
-T-Head  | XTheadFMemIdx   | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
+T-Head  | XTheadSync      | 2.0.0          | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/download/2.0.0/xthead-2022-09-05-2.0.0.pdf)
 Ventana | XVentanaCondOps | 1.0            | [VTx-family custom instructions](https://github.com/ventanamicro/ventana-custom-extensions/releases/download/v1.0.0/ventana-custom-extensions-v1.0.0.pdf)
 
 NOTE: Vendor extension names are case-insensitive, CamelCase is used here
