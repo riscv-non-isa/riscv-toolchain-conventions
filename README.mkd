@@ -47,33 +47,149 @@ Manual](https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.
 * [GCC RISC-V option 
 documentation](https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html)
 
-## Specifying the target ISA with -march
+## Specifying the target ISA with `-march` and `-misa-spec`
 
-The compiler and assembler both accept the `-march` flag to specify the target 
-ISA, e.g. `rv32imafd`. The abbreviation `g` can be used to represent either 
-`IMAFD` (when targeting RISC-V ISA specification version 2.2 or earlier) or 
-`IMAFD_Zicsr_Zifencei` (version 20190608 or later) base and extensions, 
-e.g. `-march=rv64g`. A target `-march` which includes floating point 
-instructions implies a hardfloat calling convention, but can be overridden 
-using the `-mabi` flag (see the next section).
+The compiler and assembler both accept the `-march` flag to specify the target
+ISA. Additionally, the `-misa-spec` flag allows specifying the ISA specification
+release, which can have a subtle difference on how the string provided to the
+`-march` flag is interpreted.
 
-The ISA subset naming conventions are described in Chapter 27 of the RISC-V 
-user-level ISA specification. However, tools do not currently follow this 
-specification (input is case sensitive, ...).
+The `-march` string can be defined using one of the following formats:
+1) using the ISA-string-based format, or
+2) using the profile-based format.
 
-If the 'C' (compressed) instruction set extension is targeted, the compiler 
+Both formats allow specifying a list of extensions that form an additive set.
+
+### ISA-string-based format
+
+The ISA-string-based format looks similar to ISA naming strings as specified
+in the ISA Extension Naming Conventions chapter of the RISC-V ISA
+specification.
+
+A valid `-march` string in the ISA-string-based format must follow these rules:
+
+* All characters of the string must be lowercase.
+* The first part of the string must be `rv32`, `rv64`, or `rv128` followed by
+  the base integer ISA (`i`, or `e`).  As `g` implies `i`, this letter can
+  also be used.
+* The next part consists of single-letter and multi-letter ISA extensions,
+  which may be in non-canonical order.
+* Single-letter ISA extensions may be separated from other single-letter extensions
+  by an underscore (`_`).
+* Multi-letter ISA extensions must be separated from other extensions
+  by an underscore (`_`).
+* Versioning of extensions follows the ISA naming string rules (e.g. `zba1p0`).
+  Single-letter extensions with versioning are still considered single-letter
+  extensions (`m1p0` is considered a single-letter extension).
+* ISA extensions can be versioned the same way as in ISA naming strings
+  (appending it directly to the ISA extension name and separate the major
+  from the minor version number using a `p`).
+  E.g. `m1p0` represents `m` in version `1.0`.
+  The selected version in case the extension's version number is not specified
+  as part of the `-march` string is compiler-specific.
+* The version separator(`p`) has a higher priority than a trailing `p` in the
+  extension name. E.g. `zba1p` will be interpreted as `zba` version 1.0 and
+  not as `zba1p`.
+
+Examples:
+
+* `rv32imac`: Valid `-march` string.
+* `rv64gc`: Valid ISA string.
+* `rv32ima_zicsr`: Valid `-march` string.
+* `rv32i2p1m2p0a2p1f2p2d2p2c_zicsr_zifencei`: Valid `-march` string.
+* `rv64gc_zba_zbb_zbc1p0`: Valid `-march` string.
+* `rv64gc_xtheadba`: Valid `-march` string.
+* `rv32i_zicsr_mafd`: Valid `-march` string.
+* `rv32i_mafd_zicsr`: Valid `-march` string.
+* `rv32i_m_a_f_d_zicsr`: Valid `-march` string.
+* `rv32i_mafdzicsr`: Invalid because `mafdzicsr` does not separate the multi-letter extension `Zicsr`.
+* `rv64gc_Zicsr`: Invalid because of the uppercase character.
+* `rv32mai`: Invalid because base ISA does not follow `rv32`.
+* `rv32i_zicsrzifencei`: Invalid because multi-letter extensions need to be
+   separated by an underscore (`zicsr` and `zifencei` are existing individual
+   extensions).
+
+NOTE: A RISC-V ISA extension might depend on other ISA extensions.
+This dependencies are honored by the `-march` string.
+E.g. `D` implies `F` and does not need to be listed explicitly.
+
+NOTE: The ISA-string-based format is a user-friendly format,
+that is different from the machine-friendly format in the ELF
+tag `Tag_RISCV_arch`.
+
+#### Interpretation versioning with `-misa-spec`
+
+The interpretation of the string provided to the `-march` flag
+in ISA-string-based format is versioned using the `-misa-spec` flag.
+The `-misa-spec` flag is incompatible with a string provided
+to the `-march` flag in the profile-based format.
+
+Possible versions are:
+
+* `2.2`
+* `20190608`
+* `20191213`
+
+Additional versions might appear in the future if a change of
+the interpretation is required.
+
+The following interpretation differences exist:
+
+* The expansion of `g` with versions before `20190608` is `imafd`.
+  The expansion of `g` with version `20190609` or later is
+  `imafd_zicsr_zifencei`.
+
+Examples:
+
+* `-march=rv64gc -misa-spec=20191213` enables RV64I and the extensions
+  `mafdc` as well as `zicsr` and `zifencei`.
+* `-march=rv64gc -misa-spec=rva22` is invalid (unknown ISA version).
+
+NOTE: The RISC-V specification is intended to be backward and
+forward-compatible. However, such a goal is usually hard to achieve and fixes
+for mistakes in specifications or misinterpretation of specifications
+may require differences in how the `-march` string is interpreted.
+The required changes are subtle and irrelevant to most users.
+However, a mechanism to enable old behavior (even if considered wrong)
+is considered a helpful solution for users that depend on this behavior.
+
+### Profile-based format
+
+The profiles-string-based format has the following form
+`-march=<profile-name>[+<option-ext>]+`.
+
+Profile names are lowercase strings of the profile name (e.g. `rva22u64`).
+It is possible to add additional extensions using the `+` character.
+
+The effect of specifying a profile is that all mandatory extensions
+of that profile will be enabled. The list of mandatory extensions
+of a profile can be found in the RISC-V profiles specification.
+
+The profiles-string-based format is implicitly versioned
+by the profile's prefix (e.g. "rva22"), therefore a change in the
+interpretation (if necessary) can be introduced by adding support
+for a new profile version. Therefore, the profiles-string-based format
+is not compatible with the versioning flag `-misa-spec`.
+
+Examples:
+
+* `rva22u64`: Valid `-march` string.
+* `rva22u64+v` Valid `-march` string.
+* `rva22u64+xtheadba`: Valid `-march` string.
+* `rva22u64+xventanacondopts1p0`: Valid -march string.
+* `RVA22U64`: Invalid because the string must not contain uppercase characters.
+* `rva22u64+zfinx` is not valid because Zfinx is incompatible with RVA22U64.
+* `-march=rva22u64 -misa-spec=2.2` is not valid because the `-misa-spec`
+  flag is not compatible with the profile-based format.
+
+### Implicit effects of the `-march` string
+
+A target `-march` string, which includes floating point instructions, implies a
+hardfloat calling convention, but can be overridden using the `-mabi` flag
+(see the next section).
+
+If the `c` (compressed) instruction set extension is targeted, the compiler
 will generate compressed instructions where possible.
-
-### Issues for consideration
-* Whether `riscv32` and `riscv64` should be accepted as synonyms for `rv32` 
-and `rv64`.
-* Whether the `-march` string should be parsed case insensitively.
-* Exposing the ability to specify version numbers for a target extension.
-* Specifying non-standard extensions. The ISA specification suggests naming 
-such as `rv32gXfirstext_Xsecondext`. In GCC or Clang it would be more 
-conventional to give a string such as `rv32g+firstext+secondext`.
-* Whether ordering should be enforced on the ISA string (e.g. currently 
-`rv32imafd` is accepted by GCC but `rv32iamfd` is not).
 
 ## Specifying the target ABI with -mabi
 
