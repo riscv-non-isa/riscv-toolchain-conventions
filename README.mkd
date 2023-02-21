@@ -299,6 +299,7 @@ Vendor                 | Prefix          | URL
 SiFive                 | sf              | https://www.sifive.com/
 T-Head                 | th              | https://www.t-head.cn/
 Ventana Micro Systems  | vt              | https://www.ventanamicro.com/
+Nuclei                 | xl              | https://nucleisys.com/
 
 NOTE: Vendor prefixes are case-insensitive.
 
