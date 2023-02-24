@@ -299,8 +299,10 @@ Vendor                 | Prefix          | URL
 SiFive                 | sf              | https://www.sifive.com/
 T-Head                 | th              | https://www.t-head.cn/
 Ventana Micro Systems  | vt              | https://www.ventanamicro.com/
+Nuclei                 | xl              | https://nucleisys.com/
 
-NOTE: Vendor prefixes are case-insensitive.
+- NOTE: Vendor prefixes are case-insensitive.
+- NOTE: The Nuclei instruction prefix `xl` is an abbreviation of "XinLai", which is the Chinese pronunciation of Nuclei(芯来).
 
 ### List of vendor extensions
 
