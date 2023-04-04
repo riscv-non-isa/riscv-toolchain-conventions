@@ -2,8 +2,8 @@
 
 ## Copyright and license information
 
-This document is authored by:
-* Alex Bradbury <asb@lowrisc.org>.
+This document is authored by a [range of
+contributors](https://github.com/riscv-non-isa/riscv-toolchain-conventions/graphs/contributors).
 
 Licensed under the Creative Commons Attribution 4.0 International License 
 (CC-BY 4.0). The full license text is available at 
