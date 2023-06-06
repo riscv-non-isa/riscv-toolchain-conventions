@@ -296,6 +296,7 @@ in the ratified base ISA and extensions (e.g. the use of 'w', 'd',
 
 Vendor                 | Prefix          | URL
 :--------------------- | :-------------- | :-------------
+Open Hardware Group    | cv              | https://www.openhwgroup.org/
 SiFive                 | sf              | https://www.sifive.com/
 T-Head                 | th              | https://www.t-head.cn/
 Ventana Micro Systems  | vt              | https://www.ventanamicro.com/
@@ -304,10 +305,20 @@ Nuclei                 | xl              | https://nucleisys.com/
 - NOTE: Vendor prefixes are case-insensitive.
 - NOTE: The Nuclei instruction prefix `xl` is an abbreviation of "XinLai", which is the Chinese pronunciation of Nuclei(芯来).
 
+NOTE: OpenHW cores are all branded as CORE-V, hence the prefix.
+
 ### List of vendor extensions
 
 Vendor  | Name            | Version        | ISA Document
 :------ | :-------------- | :------------- | :---------------
+OpenHW  | Xcvalu          | 1.0.0          | [CORE-V Instruction Set Extensions](https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst)
+OpenHW  | Xcvbi           | 1.0.0          | [CORE-V Instruction Set Extensions](https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst)
+OpenHW  | Xcvbitmanip     | 1.0.0          | [CORE-V Instruction Set Extensions](https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst)
+OpenHW  | Xcvelw          | 1.0.0          | [CORE-V Instruction Set Extensions](https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst)
+OpenHW  | Xcvhwlp         | 1.0.0          | [CORE-V Instruction Set Extensions](https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst)
+OpenHW  | Xcvmac          | 1.0.0          | [CORE-V Instruction Set Extensions](https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst)
+OpenHW  | Xcvmem          | 1.0.0          | [CORE-V Instruction Set Extensions](https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst)
+OpenHW  | Xcvsimd         | 1.0.0          | [CORE-V Instruction Set Extensions](https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst)
 SiFive  | XSFVCP          | 1.0            | [SiFive Vector Coprocessor Interface Software Specification](https://sifive.cdn.prismic.io/sifive/c3829e36-8552-41f0-a841-79945784241b_vcix-spec-software.pdf)
 T-Head  | XTheadCmo       | 1.0            | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/latest)
 T-Head  | XTheadBa        | 1.0            | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/latest)
@@ -325,6 +336,13 @@ Ventana | XVentanaCondOps | 1.0            | [VTx-family custom instructions](ht
 
 NOTE: Vendor extension names are case-insensitive, CamelCase is used here
 for readability.
+
+NOTE: Additional information on the CORE-V ISA extensions can be found in the
+[CORE-V ISA Extension
+Naming](https://github.com/openhwgroup/core-v-sw/blob/master/specifications/corev-isa-extension-naming.md)
+specification, and in the draft [CORE-V Builtin
+Function](https://github.com/openhwgroup/core-v-sw/blob/master/specifications/corev-builtin-spec.md)
+specification.
 
 ## TODO
 
