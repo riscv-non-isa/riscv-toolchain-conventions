@@ -70,7 +70,19 @@ Profiles should be recognized and used in the `-march=` option. The benefit use
 `-march` option is easy for toolchain parsing the profiles string and expanding
 it into normal extensions combinations. 
 
-Profiles format has the following form `-march=<profile-name>[+<option-ext>]+`.
+Profiles format has the following BNF form `"-march="<profile-name>"+"[option-ext]*`.
+
+`profile-name ::= "RV"<profile-family-name><profile-ratified-year><privilege-mode><ISA-XLEN>`
+
+`profile-family-name ::= "I" | "M" | "A"`
+
+`profile-ratified-year ::= "20" | "22" | "23"`
+
+`privilege-mode ::= "U" | "S" | "M"`
+
+`ISA-XLEN ::= "64" | "32"`
+
+`option-ext ::= 'a legal RISC-V extension name'`
 
 As the spec defines, to use the profiles it should follow profile naming convention
 (See [3.4 form spec doc](https://github.com/riscv/riscv-profiles)), the toolchain
