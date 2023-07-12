@@ -346,10 +346,6 @@ specification.
 
 ## TODO
 
-* `-mdiv`, `-mno-div`, `-mfdiv`, `-mno-fdiv`, `-msave-restore`, 
-  `-mno-save-restore`, `-mstrict-align`, `-mno-strict-align`, 
-  `-mexplicit-relocs`, `-mno-explicit-relocs`
-
 ## Appendix: Exposing a vendor-specific extension across the toolchain
 
 TODO.
