@@ -94,17 +94,17 @@ profiles are assumed to be entered `at the beginning of the -march option`, and
 then input other extensions. Profiles `should use uppercase letters` in the `-march`
 option.
 
-e.g. `-march = RVA20U64` is a legal profile input, it will be expanded into:
+e.g. `-march=RVA20U64` is a legal profile input, it will be expanded into:
 
-`-march = rv64imafdc_zicsr_ziccif_ziccrse_ziccamoa_zicclsm_za128rs`,
+`-march=rv64imafdc_zicsr_ziccif_ziccrse_ziccamoa_zicclsm_za128rs`,
 which include all the mandatory extensions required by this profile.
 
-`-march = RVA20U64+zba_zbb_zbc_zbs` is also a legal profile input, it will add
+`-march=RVA20U64+zba_zbb_zbc_zbs` is also a legal profile input, it will add
 four new extensions after expanded profile strings:
 
-`-march = rv64imafdc_zicsr_ziccif_ziccrse_ziccamoa_zicclsm_za128rs_zba_zbb_zbc_zbs`
+`-march=rv64imafdc_zicsr_ziccif_ziccrse_ziccamoa_zicclsm_za128rs_zba_zbb_zbc_zbs`
 
-and `-march = rva20u64` is an illegal profile input, it does not use uppercase letters.
+and `-march=rva20u64` is an illegal profile input, it does not use uppercase letters.
 
 ### Issues for consideration
 * Whether `riscv32` and `riscv64` should be accepted as synonyms for `rv32` 
