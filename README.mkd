@@ -373,6 +373,7 @@ T-Head  | XTheadMac       | 1.0            | [T-Head ISA extension specification
 T-Head  | XTheadMemPair   | 1.0            | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/latest)
 T-Head  | XTheadMemIdx    | 1.0            | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/latest)
 T-Head  | XTheadSync      | 1.0            | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/latest)
+T-Head  | XTheadVector    | 1.0            | [T-Head ISA extension specification](https://github.com/T-head-Semi/thead-extension-spec/releases/latest)
 Ventana | XVentanaCondOps | 1.0            | [VTx-family custom instructions](https://github.com/ventanamicro/ventana-custom-extensions/releases/download/v1.0.0/ventana-custom-extensions-v1.0.0.pdf)
 
 NOTE: Vendor extension names are case-insensitive, CamelCase is used here
