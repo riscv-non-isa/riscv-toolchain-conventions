@@ -64,6 +64,48 @@ specification (input is case sensitive, ...).
 If the 'C' (compressed) instruction set extension is targeted, the compiler 
 will generate compressed instructions where possible.
 
+### Profile-based format
+
+Profiles should be recognized and used in the `-march=` option. The benefit of using
+the `-march` option is easy for toolchain parsing the profiles string and expanding
+it into normal extensions combinations. 
+
+Profiles format has the following BNF form `"-march="<profile-name>"+"[option-ext]*`.
+
+`profile-name ::= "RV"<profile-family-name><profile-ratified-year><privilege-mode><ISA-XLEN>`
+
+`profile-family-name ::= "I" | "M" | "A"`
+
+`profile-ratified-year ::= "20" | "22" | "23"`
+
+`privilege-mode ::= "U" | "S" | "M"`
+
+`ISA-XLEN ::= "64" | "32"`
+
+`option-ext ::= 'a legal RISC-V extension name'`
+
+As the spec defines, to use the profiles it should follow profile naming convention
+(See [3.4 form spec doc](https://github.com/riscv/riscv-profiles)), the toolchain
+will check whether an input profile name is correct at first, then do the parse
+work.
+  
+To distinguish between ordinary extension input and input with profiles,
+profiles are assumed to be entered `at the beginning of the -march option`, and
+then input other extensions. Profiles `should use uppercase letters` in the `-march`
+option.
+
+e.g. `-march=RVA20U64` is a legal profile input, it will be expanded into:
+
+`-march=rv64imafdc_zicsr_ziccif_ziccrse_ziccamoa_zicclsm_za128rs`,
+which include all the mandatory extensions required by this profile.
+
+`-march=RVA20U64+zba_zbb_zbc_zbs` is also a legal profile input, it will add
+four new extensions after expanded profile strings:
+
+`-march=rv64imafdc_zicsr_ziccif_ziccrse_ziccamoa_zicclsm_za128rs_zba_zbb_zbc_zbs`
+
+and `-march=rva20u64` is an illegal profile input, it does not use uppercase letters.
+
 ### Issues for consideration
 * Whether `riscv32` and `riscv64` should be accepted as synonyms for `rv32` 
 and `rv64`.
