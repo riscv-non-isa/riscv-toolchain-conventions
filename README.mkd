@@ -344,6 +344,17 @@ Nuclei                 | xl              | https://nucleisys.com/
 
 NOTE: OpenHW cores are all branded as CORE-V, hence the prefix.
 
+### List of vendor identifiers
+
+Vendor identifiers are dummy symbols used in the corresponding `R_RISCV_VENDOR`
+relocation (irrespective of ELF class/XLEN) and must be unique amongst all
+vendors providing custom relocations. Vendor identifiers may be suffixed with a
+tag to provide extra relocations for a given vendor.
+
+Vendor                 | Symbol  |
+:--------------------- | :------ |
+Open Hardware Group    | COREV   |
+
 ### List of vendor extensions
 
 Vendor  | Name            | Version        | ISA Document
