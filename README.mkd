@@ -291,6 +291,20 @@ Vendors should also aim to follow the conventions used for naming mnemonics
 in the ratified base ISA and extensions (e.g. the use of 'w', 'd',
 'u', and 's' suffixes).
 
+### CSR naming scheme
+
+Vendors may define their own CSRs within the custom read-only CSR address range
+specified in the RISC-V ISA spec. However, to avoid conflicts, each vendor CSR
+must include a prefix corresponding to the vendor's name.
+
+The vendor prefix should match the prefix defined in assembly mnemonics. The
+primary difference is that CSRs use an underscore rather than a dot as a
+separator, e.g., `sf_` for SiFive and `vt_` for Ventana.
+
+NOTE: The underscore is used as a separator because it is a valid character in
+macros, whereas a dot is not. This allows users to seamlessly transition their
+code from macro definitions to assembler builtin definitions.
+
 ### List of vendor prefixes
 
 
