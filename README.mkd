@@ -333,6 +333,15 @@ Vendors should also aim to follow the conventions used for naming mnemonics
 in the ratified base ISA and extensions (e.g. the use of 'w', 'd',
 'u', and 's' suffixes).
 
+### CSR naming scheme
+
+Vendors may define their own CSRs within the custom read-only CSR address range
+specified in the RISC-V ISA spec. However, to avoid conflicts, each vendor CSR
+must include a prefix corresponding to the vendor's name.
+
+The vendor prefix should match the prefix defined in assembly mnemonics and be
+separated by a dot, e.g., `th.vxrm`.
+
 ### List of vendor prefixes
 
 
