@@ -152,7 +152,7 @@ impossible combinations of `-march` and `-mabi` such as `-march=rv32i` and
 ## Specifying the target code model with -mcmodel
 
 The target code model indicates constraints on symbols which the compiler can 
-exploit these constraints to generate more efficient code. Two code models are 
+exploit these constraints to generate more efficient code. Three code models are 
 currently defined for RISC-V:
 
 * `-mcmodel=medlow`. The program and its statically defined symbols must lie 
@@ -161,6 +161,17 @@ within a single 2GiB address range, between the absolute addresses -2GiB and
 * `-mcmodel=medany`. The program and its statically defined symbols must lie 
 within a single 4GiB address range. `auipc` and `addi` pairs are used to 
 generate addresses.
+* Use of any PIC or PIE option (e.g. -fpic, -fPIC, -fpie or -fPIE) will enable
+the medium position independent code model. This model is similar to the medium
+any code model, but uses the global offset table (GOT) for non-local symbol
+addresses.
+
+NOTE: When PIC or PIE mode enabled the `-mcmodel=medlow` will be suppressed.
+
+RISC-V psABI has a contain sections to describe the code model:
+- [Medium low code model](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#medium-low-code-model): -mcmodel=medlow
+- [Medium any code model](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#medium-low-code-model): -mcmodel=medany
+- [Medium position independent code model](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#medium-position-independent-code-model):  -fpic, -fPIC, -fpie or -fPIE.
 
 ## Disassembler (objdump) behaviour
 
