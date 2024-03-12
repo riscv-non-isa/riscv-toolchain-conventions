@@ -162,12 +162,6 @@ within a single 2GiB address range, between the absolute addresses -2GiB and
 within a single 4GiB address range. `auipc` and `addi` pairs are used to 
 generate addresses.
 
-TODO: interaction with PIC.
-
-### Issues for consideration
-* It has been proposed to deprecate the `medlow` code model and rename 
-`medany` to `medium`.
-
 ## Disassembler (objdump) behaviour
 
 A RISC-V ELF binary is not currently self-describing, in the sense that it 
