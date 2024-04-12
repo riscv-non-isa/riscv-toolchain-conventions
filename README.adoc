@@ -1,0 +1,545 @@
+= RISC-V Toolchain Conventions
+:pp: {plus}{plus}
+
+== Copyright and license information
+
+This document is authored by a https://github.com/riscv-non-isa/riscv-toolchain-conventions/graphs/contributors[range of
+contributors].
+
+Licensed under the Creative Commons Attribution 4.0 International License
+(CC-BY 4.0). The full license text is available at
+https://creativecommons.org/licenses/by/4.0/.
+
+== Aims
+
+This effort aims to document the expected behaviour and command-line interface
+of RISC-V toolchains. In doing so, we can provide an avenue for members of the
+GNU and LLVM communities to collaborate on standardising and extending these
+conventions. A diverse range of RISC-V implementations and custom extensions
+will inevitably result in vendor-specific toolchains being created and
+distributed. By describing a clear preferred path for exposing vendor-specific
+extensions or modifications, we can try to increase the likelihood that these
+vendor toolchain distributions have a common interface and aren't gratuitously
+different.
+
+== Status and roadmap
+
+This document is a work-in-progress, and contains many sections that serve
+mainly to enumerate current gaps or oddities. The plan is to seek feedback and
+further develop the proposal with the help of the RISC-V community, then to
+seek input from the wider GCC and Clang developer communities for extensions
+or changes beyond the current set of command-line options supported by GCC.
+
+See the https://github.com/riscv-non-isa/riscv-toolchain-conventions/issues[issues
+list] to
+discuss any of the problems or TODO items described in this document.
+
+This document is currently targeted at toolchain implementers and developers,
+but over time we hope it will also become a useful reference for RISC-V
+toolchain users.
+
+== See also
+
+* https://riscv.org/technical/specifications/[RISC-V user-level ISA specification]
+(Document Version 20191213)
+* https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc[RISC-V ELF psABI
+specification]
+* https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md[RISC-V Assembly Programmer's
+Manual]
+* https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html[GCC RISC-V option
+documentation]
+
+== Specifying the target ISA with -march
+
+The compiler and assembler both accept the `-march` flag to specify the target
+ISA, e.g. `rv32imafd`. The abbreviation `g` can be used to represent either
+`IMAFD` (when targeting RISC-V ISA specification version 2.2 or earlier) or
+`IMAFD_Zicsr_Zifencei` (version 20190608 or later) base and extensions,
+e.g. `-march=rv64g`. A target `-march` which includes floating point
+instructions implies a hardfloat calling convention, but can be overridden
+using the `-mabi` flag (see the next section).
+
+The ISA subset naming conventions and canonical order are described in
+Chapter `ISA Extension Naming Conventions` of the RISC-V user-level ISA
+specification. However, tools do not currently follow this specification
+(input is case sensitive, ...).
+
+The rule of ISA string become more complicated, due to extensions implication
+rule and more extensions added into RISC-V, the canonical order is non-obvious
+to human, so tools can accept the ISA string in non-canonical order for reduce
+the burden of remembering the canonical order.
+
+Detail rule for ISA string:
+
+. First letter must be `i`, `e` or `g`.
+. Single-letter may be non-canonical order.
+. Multi-letter may be non-canonical order.
+. Multi-letter must be separated by underscore.
+. Version separator(`p`) has higher priority than `p` extension.
+
+Example:
+
+----
+rv32ima_zicsr        # Valid ISA string.
+rv32i_zicsr_m        # Valid ISA string.
+rv32i_zicsr_ma       # Valid ISA string.
+rv32imac             # Valid ISA string.
+rv32mai              # Invalid ISA string, first letter must be `i`, `e` or `g`.
+rv32i_zicsrzifence   # Valid ISA string, but it will interpreted as rv32
+                     # with base extension and `zicsrzifence` extension
+                     # rather than `zicsr` and `zifence` extensions.
+rv32i2p1             # Valid ISA string, it recognized as `I` extension with
+                     # version 2.1 rather than `I` extension with with version
+                     # 2.0 and `P` extension with 1.0.
+----
+
+If the 'C' (compressed) instruction set extension is targeted, the compiler
+will generate compressed instructions where possible.
+
+NOTE: Single-letter extension with version (e.g. `m2p0`) still treat as
+      single-letter extension, we won't treat it as multi-letter extension.
+
+NOTE: Any output of ISA string like `Tag_RISCV_arch` must be canonical order.
+
+NOTE: Cross-tool argument are highly recommended passed in canonical order for
+      backward compatible.
+
+=== Issues for consideration
+
+* Whether `riscv32` and `riscv64` should be accepted as synonyms for `rv32`
+and `rv64`.
+* Whether the `-march` string should be parsed case insensitively.
+* Exposing the ability to specify version numbers for a target extension.
+* Specifying non-standard extensions. The ISA specification suggests naming
+such as `rv32gXfirstext_Xsecondext`. In GCC or Clang it would be more
+conventional to give a string such as `rv32g+firstext+secondext`.
+* Whether ordering should be enforced on the ISA string (e.g. currently
+`rv32imafd` is accepted by GCC but `rv32iamfd` is not).
+
+== Specifying the target ABI with -mabi
+
+RISC-V compilers support the following ABIs, which can be specified using
+`-mabi`:
+
+* https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32[`ilp32`]:
+int, long, pointers are 32-bit. GPRs and the stack are used for
+parameter passing.
+* https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32f[`ilp32f`]:
+int, long, pointers are 32-bit. GPRs, 32-bit FPRs, and the stack are
+used for parameter passing.
+* https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32d[`ilp32d`]:
+int, long, pointers are 32-bit. GPRs, 64-bit FPRs and the stack are
+used for parameter passing.
+* https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-lp64[`lp64`]:
+long, pointers are 64-bit. GPRs and the the stack are used for
+parameter passing.
+* https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-lp64f[`lp64f`]:
+long, pointers are 64-bit. GPRs, 32-bit FPRs, and the stack are used for
+parameter passing.
+* https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-lp64d[`lp64d`]:
+long, pointers are 64-bit. GPRs, 64-bit FPRs, and the stack are used for
+parameter passing.
+
+See the https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc[RISC-V ELF
+psABI]
+for more information on these ABIs.
+
+The default value for `-mabi` is system dependent. For cross-compilation, both
+`-march` and `-mabi` should be specified. An error will be produced for
+impossible combinations of `-march` and `-mabi` such as `-march=rv32i` and
+`-mabi=ilp32f`.
+
+=== Issues for consideration
+
+* Should the `-mabi` string be parsed case insensitively?
+* How should the RV32E ABI be specified? `ilp32e`?
+
+== Specifying the target code model with -mcmodel
+
+The target code model indicates constraints on symbols which the compiler can
+exploit these constraints to generate more efficient code. Three code models are
+currently defined for RISC-V:
+
+* `-mcmodel=medlow`. The program and its statically defined symbols must lie
+within a single 2GiB address range, between the absolute addresses -2GiB and
++2GiB. `lui` and `addi` pairs are used to generate addresses.
+* `-mcmodel=medany`. The program and its statically defined symbols must lie
+within a single 4GiB address range. `auipc` and `addi` pairs are used to
+generate addresses.
+* Use of any PIC or PIE option (e.g. -fpic, -fPIC, -fpie or -fPIE) will enable
+the medium position independent code model. This model is similar to the medium
+any code model, but uses the global offset table (GOT) for non-local symbol
+addresses.
+
+NOTE: When PIC or PIE mode enabled the `-mcmodel=medlow` will be suppressed.
+
+RISC-V psABI has a contain sections to describe the code model:
+
+* https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#medium-low-code-model[Medium low code model]: -mcmodel=medlow
+* https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#medium-low-code-model[Medium any code model]: -mcmodel=medany
+* https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#medium-position-independent-code-model[Medium position independent code model]:  -fpic, -fPIC, -fpie or -fPIE.
+
+== Disassembler (objdump) behaviour
+
+A RISC-V ELF binary is not currently self-describing, in the sense that it
+doesn't contain enough information to determine which variant of the RISC-V
+architecture is being targeted. GNU objdump will currently attempt disassemble
+any instruction whose encoding matches one of the standard RV32/RV64GC
+extensions.
+
+objdump will default to showing pseudoinstructions and ABI register names. The
+`numeric` disassembler argument can be used to use architectural register
+names such as `x10`, while the `no-aliases` disassembler argument will ensure
+only canonical instructions rather than pseudoinstructions or aliases are
+printed. These arguments are specified using `-M`, e.g. `-M numeric` or `-M
+numeric,no-aliases`.
+
+Perhaps surprisingly, the disassembler will default to hiding the difference
+between compressed (16-bit) instructions and their 32-bit equivalent. e.g.
+`c.addi sp, -16` will be printed as `addi sp, sp, -16`.
+
+=== Issues for consideration
+
+* The current GNU objdump behaviour will not provide useful results for cases
+where non-standard extensions are implemented which reuse some of the standard
+extension's encoding space. Making RISC-V ELF files self-describing (as
+discussed https://github.com/riscv-non-isa/riscv-elf-psabi-doc/pull/47[here]) would
+avoid this problem.
+* Would it be useful to have separate flags that control the printing of
+pseudoinstructions and whether compressed instructions are printed directly or
+not?
+
+== Assembler behaviour
+
+See the https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md[RISC-V Assembly Programmer's
+Manual]
+for details on the syntax accepted by the assembler.
+
+The assembler will produce compressed instructions whenever possible if the
+targeted RISC-V variant includes support for the 'C' compressed instruction
+set.
+
+=== Issues for consideration
+
+* There is currently no way to enable support for the 'C' ISA extension, but to
+disable the automatic 'compression' of instructions.
+
+== C/C{pp} preprocessor definitions
+
+* `__riscv`: defined for any RISC-V target. Older versions of the GCC
+toolchain defined `__riscv__`.
+* `__riscv_xlen`: 32 for RV32 and 64 for RV64.
+* `__riscv_float_abi_soft`, `__riscv_float_abi_single`,
+`__riscv_float_abi_double`: one of these three will be defined, depending on
+target ABI.
+* `__riscv_cmodel_medlow`, `__riscv_cmodel_medany`: one of these two will be
+defined, depending on the target code model.
+* `__riscv_mul`: defined when targeting the 'M' ISA extension.
+* `__riscv_muldiv`: defined when targeting the 'M' ISA extension and
+`-mno-div` has not been used.
+* `__riscv_div`: defined when targeting the 'M' ISA extension and `-mno-div`
+has not been used.
+* `__riscv_atomic`: defined when targeting the 'A' ISA extension.
+* `__riscv_flen`: 32 when targeting the 'F' ISA extension (but not 'D') and 64
+when targeting 'FD'.
+* `__riscv_fdiv`: defined when targeting the 'F' or 'D' ISA extensions and
+`-mno-fdiv` has not been used.
+* `__riscv_fsqrt`: defined when targeting the 'F' or 'D' ISA extensions and
+`-mno-fdiv` has not been used.
+* `__riscv_compressed`: defined when targeting the 'C' ISA extension.
+
+=== Issues for consideration
+
+* What should the naming convention be for defines that indicate support for
+non-standard extensions?
+* What additional information could/should be exposed via preprocessor
+defines?
+
+== Specifying stack alignment
+
+The default stack alignment is 16 bytes in RV32I and RV64I, and 4 bytes on
+RV32E. There is not currently a way to specify an alternative stack alignment,
+but the `-mpreferred-stack-boundary` and `-mincoming-stack-boundary` flags
+supported by GCC on X86 could be adopted.
+
+== Save restore support
+
+The save restore optimization is enabled through the option `-msave-restore`
+and reduces the amount of code in the prologue and epilogue by using
+library functions instead of inline code to save and restore callee saved
+registers. The library functions are provided in the emulation library and
+have the following signatures:
+
+* `void __riscv_save_<N>(void)`
+* `void __riscv_restore_<N>(void)`
+* `void __riscv_restore_tailcall_<N>(void *tail /* passed in t1 */)` (LLVM/compiler-rt only)
+
+`<N>` is a value between 0 and 12 and corresponds to the number of
+registers between `s0` and `s11` that are saved/restored. The return
+address register `ra` is always included in the registers saved and restored.
+
+The `__riscv_save_<N>` functions are called from the prologue, using `t0` as
+the link register to avoid clobbering `ra`. They allocate stack space for the
+registers and then save `ra` and the appropriate number of registers from
+`s0`-`s11`. The `__riscv_restore_<N>` functions are tail-called from the
+epilogue. They restore the saved registers, deallocate the stack space for the
+register, and then perform a return through the restored value of `ra`.
+
+`__riscv_restore_tailcall_<N>` are additional entry points used when the
+epilogue of the called function ends in a tail-call. Unlike
+`__riscv_restore_<N>` these are also provided the address of the function
+which was originally tail-called as an argument, and after restoring
+registers they make a tail-call through that argument instead of returning.
+Note that the address of the function to tail-call is provided in register `t1`,
+which differs from the normal calling convention.
+
+As of November 2021 the additional tail-call entry points are only
+implemented in compiler-rt, and calls will only be generated by LLVM
+when the option `-mllvm -save-restore-tailcall` is specified.
+
+== Conventions for vendor extensions
+
+Support for custom instruction set extensions are an important part of RISC-V,
+with large encoding spaces reserved of vendor extensions.
+
+However, there are no official guidelines on naming the mnemonics. This section
+defines guidelines which vendors are expected to follow if upstreaming support
+for their extensions. Although vendor-provided toolchains are free to make
+different choices, they are strongly urged to align with these guidelines in
+order to ensure there is a straightforward path for upstreaming in the future.
+
+NOTE: Open source toolchain maintainer has final say on accepting vendor
+extension, comply with this conventions isn't guarantee upstream will accept.
+
+=== Vendor extension naming scheme
+
+According to the RISC-V ISA spec, non-standard extensions are named using a single `X`
+followed by an alphabetical name and an optional version number.
+
+To make it easier to identify and prevent naming conflict, vendor extensions
+should start with a vendor name, which could be an abbreviation of the full name.
+
+For example:
+
+* `XVentanaCondOps` from Ventana
+* `Xsfcflushdlone` from SiFive
+
+=== Assembly mnemonic
+
+In order to avoid confusion between standard extension and other vendor
+extensions, instruction mnemonics from vendor extensions must have a
+prefix corresponding to the vendor's name.
+
+The vendor prefix should be at least two letters long
+
+e.g. `sf.` for SiFive, `vt.` for Ventana. No central registration with RISC-V
+International or elsewhere is required before the prefix is used.
+
+NOTE: Although no centralized registration is required, vendors should add the
+vendor prefix to the table _IF_ vendors are interested to upstream their
+extension to open source toolchain like LLVM or GNU toolchain.
+
+Vendors should also aim to follow the conventions used for naming mnemonics
+in the ratified base ISA and extensions (e.g. the use of 'w', 'd',
+'u', and 's' suffixes).
+
+=== CSR naming scheme
+
+Vendors may define their own CSRs within the custom read-only CSR address range
+specified in the RISC-V ISA spec. However, to avoid conflicts, each vendor CSR
+must include a prefix corresponding to the vendor's name.
+
+The vendor prefix should match the prefix defined in assembly mnemonics and be
+separated by a dot, e.g., `th.vxrm`.
+
+=== List of vendor prefixes
+
+|===
+| Vendor | Prefix | URL
+
+| Open Hardware Group
+| cv
+| https://www.openhwgroup.org/
+
+| SiFive
+| sf
+| https://www.sifive.com/
+
+| T-Head
+| th
+| https://www.t-head.cn/
+
+| Ventana Micro Systems
+| vt
+| https://www.ventanamicro.com/
+
+| Nuclei
+| xl
+| https://nucleisys.com/
+|===
+
+* NOTE: Vendor prefixes are case-insensitive.
+* NOTE: The Nuclei instruction prefix `xl` is an abbreviation of "XinLai", which is the Chinese pronunciation of Nuclei(芯来).
+
+NOTE: OpenHW cores are all branded as CORE-V, hence the prefix.
+
+=== List of vendor extensions
+
+|===
+| Vendor | Name | Version | ISA Document
+
+| OpenHW
+| Xcvalu
+| 1.0.0
+| https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+
+| OpenHW
+| Xcvbi
+| 1.0.0
+| https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+
+| OpenHW
+| Xcvbitmanip
+| 1.0.0
+| https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+
+| OpenHW
+| Xcvelw
+| 1.0.0
+| https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+
+| OpenHW
+| Xcvhwlp
+| 1.0.0
+| https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+
+| OpenHW
+| Xcvmac
+| 1.0.0
+| https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+
+| OpenHW
+| Xcvmem
+| 1.0.0
+| https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+
+| OpenHW
+| Xcvsimd
+| 1.0.0
+| https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+
+| SiFive
+| XSFvqmaccdod
+| 1.0
+| https://www.sifive.com/document-file/sifive-int8-matrix-multiplication-extensions-specification[SiFive Int8 Matrix Multiplication Extensions Specification]
+
+| SiFive
+| XSFvqmaccqoq
+| 1.0
+| https://www.sifive.com/document-file/sifive-int8-matrix-multiplication-extensions-specification[SiFive Int8 Matrix Multiplication Extensions Specification]
+
+| SiFive
+| XSFvfnrclipxfqf
+| 1.0
+| https://www.sifive.com/document-file/fp32-to-int8-ranged-clip-instructions[FP32-to-int8 Ranged Clip Instructions (Xsfvfnrclipxfqf) Extension Specification]
+
+| SiFive
+| Xsfvfwmaccqqq
+| 1.0
+| https://www.sifive.com/document-file/matrix-multiply-accumulate-instruction[Matrix Multiply Accumulate Instruction (Xsfvfwmaccqqq) Extension Specification]
+
+| SiFive
+| XSFVCP
+| 1.0
+| https://sifive.cdn.prismic.io/sifive/c3829e36-8552-41f0-a841-79945784241b_vcix-spec-software.pdf[SiFive Vector Coprocessor Interface Software Specification]
+
+| T-Head
+| XTheadCmo
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadBa
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadBb
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadBs
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadCondMov
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadFMemIdx
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadFmv
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadInt
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadMac
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadMemPair
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadMemIdx
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadSync
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| T-Head
+| XTheadVector
+| 1.0
+| https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+
+| Ventana
+| XVentanaCondOps
+| 1.0
+| https://github.com/ventanamicro/ventana-custom-extensions/releases/download/v1.0.0/ventana-custom-extensions-v1.0.0.pdf[VTx-family custom instructions]
+|===
+
+NOTE: Vendor extension names are case-insensitive, CamelCase is used here
+for readability.
+
+NOTE: Additional information on the CORE-V ISA extensions can be found in the
+https://github.com/openhwgroup/core-v-sw/blob/master/specifications/corev-isa-extension-naming.md[CORE-V ISA Extension
+Naming]
+specification, and in the draft https://github.com/openhwgroup/core-v-sw/blob/master/specifications/corev-builtin-spec.md[CORE-V Builtin
+Function]
+specification.
+
+== TODO
+
+* `-mdiv`, `-mno-div`, `-mfdiv`, `-mno-fdiv`, `-msave-restore`,
+`-mno-save-restore`, `-mstrict-align`, `-mno-strict-align`,
+`-mexplicit-relocs`, `-mno-explicit-relocs`
+
+== Appendix: Exposing a vendor-specific extension across the toolchain
+
+TODO.
