@@ -101,6 +101,27 @@ NOTE: Any output of ISA string like `Tag_RISCV_arch` must be canonical order.
 NOTE: Cross-tool argument are highly recommended passed in canonical order for
       backward compatible.
 
+### Amending extensions with -march
+
+The compiler and assembler accept the `-march` flag to append extensions
+to the target ISA by assigning a new extension (or an extension list) via `=+`.
+I.e., `-march=rv64gc -march=+zba_zbb` is equivalent to `-march=rv64gc_zba_zbb`.
+
+The rules for the amendment string are:
+
+1. Bases cannot be part of an amended string.
+2. Extensions must not be in canonical order.
+3. Multi-letter extensions must be separated by underscores.
+4. Multiple amendments are allowed.
+5. The resulting ISA string is derived by the concatenation of the target
+   ISA with all amendment strings using an underscore (in the order that
+   is provided on the command line).
+
+Examples:
+
+* `-march=rv64gc -march=+zba_zbb` is equivalent to `-march=rv64gc_zba_zbb`
+* `-march=rv32i -march=+gcv -march=+zbb` is equivalent to `-march=rv32gcv_zbb`
+
 ### Issues for consideration
 * Whether `riscv32` and `riscv64` should be accepted as synonyms for `rv32` 
 and `rv64`.
