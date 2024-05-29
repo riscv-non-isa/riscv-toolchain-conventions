@@ -67,7 +67,7 @@ rules and more extensions added into RISC-V, the canonical order is non-obvious
 to humans, so tools should accept the ISA string in non-canonical order to reduce
 the burden of remembering the canonical order.
 
-Detail rules for ISA string:
+Detailed rules for ISA string:
 
 1. First letter must be `i`, `e` or `g`.
 2. Single-letter may be non-canonical order.
