@@ -422,6 +422,18 @@ NOTE: The compiler may generate misaligned access if the program violates the
       alignment assumption.
 NOTE: This option does not affect inline assembly.
 
+
+### `-mscalar-strict-align`/`-mno-scalar-strict-align`/`-mvector-strict-align`/`-mno-vector-strict-align`
+
+`-mscalar-strict-align`/`-mno-scalar-strict-align`: Similar to
+`-mstrict-align`/`-mno-strict-align` but applied to scalar memory access only.
+
+`-mvector-strict-align`/`-mno-vector-strict-align`: Similar to
+`-mstrict-align`/`-mno-strict-align` but applied to vector memory access only.
+
+The precedence among `-m[no]-scalar-strict-align`, `-m[no-]vector-strict-align`,
+and `-m[no-]strict-align` is determined by the last one specified.
+
 ## TODO
 
 * `-mdiv`, `-mno-div`, `-mfdiv`, `-mno-fdiv`, `-msave-restore`,
