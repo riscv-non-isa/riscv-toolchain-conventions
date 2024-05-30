@@ -62,12 +62,12 @@ Chapter `ISA Extension Naming Conventions` of the RISC-V user-level ISA
 specification. However, tools do not currently follow this specification
 (input is case sensitive, ...).
 
-The rule of ISA string become more complicated, due to extensions implication
-rule and more extensions added into RISC-V, the canonical order is non-obvious
-to human, so tools can accept the ISA string in non-canonical order for reduce
+The rule of ISA string become more complicated, due to extension implication
+rules and more extensions added into RISC-V, the canonical order is non-obvious
+to humans, so tools should accept the ISA string in non-canonical order to reduce
 the burden of remembering the canonical order.
 
-Detail rule for ISA string:
+Detailed rules for ISA string:
 
 1. First letter must be `i`, `e` or `g`.
 2. Single-letter may be non-canonical order.
@@ -93,13 +93,13 @@ rv32i2p1             # Valid ISA string, it recognized as `I` extension with
 If the 'C' (compressed) instruction set extension is targeted, the compiler 
 will generate compressed instructions where possible.
 
-NOTE: Single-letter extension with version (e.g. `m2p0`) still treat as
-      single-letter extension, we won't treat it as multi-letter extension.
+NOTE: Single-letter extension with version (e.g. `m2p0`) is still treated as
+      a single-letter extension, it won't be treated as a multi-letter extension.
 
 NOTE: Any output of ISA string like `Tag_RISCV_arch` must be canonical order.
 
-NOTE: Cross-tool argument are highly recommended passed in canonical order for
-      backward compatible.
+NOTE: Cross-tool argument are highly recommended to be passed in canonical order
+      for backward compatibility.
 
 ### Issues for consideration
 * Whether `riscv32` and `riscv64` should be accepted as synonyms for `rv32` 
@@ -109,8 +109,6 @@ and `rv64`.
 * Specifying non-standard extensions. The ISA specification suggests naming 
 such as `rv32gXfirstext_Xsecondext`. In GCC or Clang it would be more 
 conventional to give a string such as `rv32g+firstext+secondext`.
-* Whether ordering should be enforced on the ISA string (e.g. currently 
-`rv32imafd` is accepted by GCC but `rv32iamfd` is not).
 
 ## Specifying the target ABI with -mabi
 
