@@ -101,6 +101,10 @@ NOTE: Any output of ISA string like `Tag_RISCV_arch` must be canonical order.
 NOTE: Cross-tool argument are highly recommended to be passed in canonical order
       for backward compatibility.
 
+NOTE: If `-march` is not specified, the target ISA will use the information
+      from `-mcpu`. If both `-march` and `-mcpu` are not specified, the default
+      ISA setting from the toolchain will be used.
+
 ### Issues for consideration
 * Whether `riscv32` and `riscv64` should be accepted as synonyms for `rv32` 
 and `rv64`.
@@ -199,6 +203,20 @@ avoid this problem.
 * Would it be useful to have separate flags that control the printing of 
 pseudoinstructions and whether compressed instructions are printed directly or 
 not?
+
+## Specifying the pipeline model and cost model with -mtune or -mcpu
+
+The pipeline model and cost model affect code generation. The compiler uses
+this information to perform better instruction scheduling and optimization for
+specific microarchitectures or core implementations.
+
+`-mtune` accepts the microarchitecture, processor family, or specific core
+implementation, while `-mcpu` is used to specify the specific core implementation.
+The key difference between these two options is that `-mcpu` will also set the
+target ISA if `-march` is not given.
+
+NOTE: If both `-mcpu` and `-mtune` are given, the toolchain implementation will
+take the pipeline model from `-mtune`.
 
 ## Assembler behaviour
 
