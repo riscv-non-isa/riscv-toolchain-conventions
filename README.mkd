@@ -398,11 +398,34 @@ specification, and in the draft [CORE-V Builtin
 Function](https://github.com/openhwgroup/core-v-sw/blob/master/specifications/corev-builtin-spec.md)
 specification.
 
+## Common Toolchain Command Line Options
+
+This section lists common RISC-V specific toolchain command line options.
+
+### `-mstrict-align`/`-mno-strict-align`
+Indicates that the compiler should not assume that unaligned scalar and
+unaligned vector memory references are handled by the system.
+
+`-mstrict-align`: The compiler disallows misaligned memory access.
+`-mno-strict-align`: The compiler allows misaligned memory access.
+
+The compiler's behavior will follow this order of precedence:
+
+- Use the setting from `-mstrict-align` / `-mno-strict-align` if either option
+  is given, taking the last one specified.
+- Use the setting from `-mtune` if `-mstrict-align` / `-mno-strict-align` is not given.
+- Use the setting from `-mcpu` if neither of the above options is given.
+- Use the compiler's default setting if none of the above options are provided.
+
+NOTE: Non-strict also known as unaligned access or misaligned access
+NOTE: The compiler may generate misaligned access if the program violates the
+      alignment assumption.
+NOTE: This option does not affect inline assembly.
+
 ## TODO
 
-* `-mdiv`, `-mno-div`, `-mfdiv`, `-mno-fdiv`, `-msave-restore`, 
-  `-mno-save-restore`, `-mstrict-align`, `-mno-strict-align`, 
-  `-mexplicit-relocs`, `-mno-explicit-relocs`
+* `-mdiv`, `-mno-div`, `-mfdiv`, `-mno-fdiv`, `-msave-restore`,
+  `-mno-save-restore`, `-mexplicit-relocs`, `-mno-explicit-relocs`
 
 ## Appendix: Exposing a vendor-specific extension across the toolchain
 
