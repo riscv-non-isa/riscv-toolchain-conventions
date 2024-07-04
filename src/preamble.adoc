@@ -1,0 +1,47 @@
+[preface]
+== Copyright and License Information
+
+The RISC-V Toolchain Conventions document is authored by a
+https://github.com/riscv-non-isa/riscv-toolchain-conventions/graphs/contributors[range of contributors].
+
+It is licensed under the Creative Commons Attribution 4.0 International License (CC-BY 4.0).
+
+The full license text is available at https://creativecommons.org/licenses/by/4.0/
+
+[preface]
+== Aims
+
+This effort aims to document the expected behaviour and command-line interface
+of RISC-V toolchains. In doing so, we can provide an avenue for members of the
+GNU and LLVM communities to collaborate on standardising and extending these
+conventions. A diverse range of RISC-V implementations and custom extensions
+will inevitably result in vendor-specific toolchains being created and
+distributed. By describing a clear preferred path for exposing vendor-specific
+extensions or modifications, we can try to increase the likelihood that these
+vendor toolchain distributions have a common interface and aren't gratuitously
+different.
+
+[preface]
+== Status and Roadmap
+
+This document is a work-in-progress, and contains many sections that serve
+mainly to enumerate current gaps or oddities. The plan is to seek feedback and
+further develop the proposal with the help of the RISC-V community, then to
+seek input from the wider GCC and Clang developer communities for extensions
+or changes beyond the current set of command-line options supported by GCC.
+
+See the https://github.com/riscv-non-isa/riscv-toolchain-conventions/issues[issues list]
+to discuss any of the problems or TODO items described in this document.
+
+This document is currently targeted at toolchain implementers and developers,
+but over time we hope it will also become a useful reference for RISC-V
+toolchain users.
+
+[preface]
+== See also
+
+- https://riscv.org/technical/specifications/[RISC-V user-level ISA specification]
+(Document Version 20191213)
+- https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc[RISC-V ELF psABI specification]
+- https://github.com/riscv-non-isa/riscv-asm-manual[RISC-V Assembly Programmer's Manual]
+- https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html[GCC RISC-V option documentation]
