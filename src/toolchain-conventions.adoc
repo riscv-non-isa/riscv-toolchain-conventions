@@ -367,6 +367,14 @@ specification, and in the draft
 https://github.com/openhwgroup/core-v-sw/blob/master/specifications/corev-builtin-spec.md[CORE-V Builtin Function]
 specification.
 
+=== List of vendor CSRs
+.List of vendor CSRs
+[%autowidth]
+|===
+|*Vendor*              |*Name*             |*Description*
+|SiFive                |sf.vcix_state     |This dummy CSR is used to prevent the scheduler to reorder between SiFive vector instructions defined in `XSFVCP` extension.
+|===
+
 == Common Toolchain Command Line Options
 
 This section lists common RISC-V specific toolchain command line options.
