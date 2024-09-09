@@ -118,7 +118,7 @@ NOTE: When PIC or PIE mode enabled the `-mcmodel=medlow` will be suppressed.
 RISC-V psABI has a contain sections to describe the code model:
 
 - https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#medium-low-code-model[Medium low code model]: -mcmodel=medlow
-- https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#medium-low-code-model[Medium any code model]: -mcmodel=medany
+- https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#medium-any-code-model[Medium any code model]: -mcmodel=medany
 - https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#medium-position-independent-code-model[Medium position independent code model]:  -fpic, -fPIC, -fpie or -fPIE.
 
 == Disassembler (objdump) behaviour
