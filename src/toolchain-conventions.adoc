@@ -298,6 +298,7 @@ separated by a dot, e.g., `th.vxrm`.
 |===
 |*Vendor*              |*Prefix*         |*URL*
 |Open Hardware Group    | cv              | https://www.openhwgroup.org/
+|Andes                  | nds             | https://www.andestech.com/
 |SiFive                 | sf              | https://www.sifive.com/
 |T-Head                 | th              | https://www.t-head.cn/
 |Ventana Micro Systems  | vt              | https://www.ventanamicro.com/
