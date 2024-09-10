@@ -170,34 +170,9 @@ disable the automatic 'compression' of instructions.
 
 == C/C++ preprocessor definitions
 
-- `+__riscv+`: defined for any RISC-V target. Older versions of the GCC
-toolchain defined `+__riscv__+`.
-- `+__riscv_xlen+`: 32 for RV32 and 64 for RV64.
-- `+__riscv_float_abi_soft+`, `+__riscv_float_abi_single+`,
-`+__riscv_float_abi_double+`: one of these three will be defined, depending on
-target ABI.
-- `+__riscv_cmodel_medlow+`, `+__riscv_cmodel_medany+`,
-`+__riscv_cmodel_large+`: one of these three will be defined, depending on
-the target code model.
-- `+__riscv_mul+`: defined when targeting the 'M' ISA extension.
-- `+__riscv_muldiv+`: defined when targeting the 'M' ISA extension and
-`-mno-div` has not been used.
-- `+__riscv_div+`: defined when targeting the 'M' ISA extension and `-mno-div`
-has not been used.
-- `+__riscv_atomic+`: defined when targeting the 'A' ISA extension.
-- `+__riscv_flen+`: 32 when targeting the 'F' ISA extension (but not 'D') and 64
-when targeting 'FD'.
-- `+__riscv_fdiv+`: defined when targeting the 'F' or 'D' ISA extensions and
-`-mno-fdiv` has not been used.
-- `+__riscv_fsqrt+`: defined when targeting the 'F' or 'D' ISA extensions and
-`-mno-fdiv` has not been used.
-- `+__riscv_compressed+`: defined when targeting the 'C' ISA extension.
-
-=== Issues for consideration
-- What should the naming convention be for defines that indicate support for
-non-standard extensions?
-- What additional information could/should be exposed via preprocessor
-defines?
+These are now maintained in the
+https://github.com/riscv-non-isa/riscv-c-api-doc/blob/main/src/c-api.adoc[RISC-V
+C API specification].
 
 == Specifying stack alignment
 
