@@ -279,6 +279,7 @@ separated by a dot, e.g., `th.vxrm`.
 |*Vendor*              |*Prefix*         |*URL*
 |Open Hardware Group    | cv              | https://www.openhwgroup.org/
 |Andes                  | nds             | https://www.andestech.com/
+|Qualcomm               | qc              | https://www.qualcomm.com/
 |SiFive                 | sf              | https://www.sifive.com/
 |T-Head                 | th              | https://www.t-head.cn/
 |Tenstorrent            | tt              | https://www.tenstorrent.com/
@@ -303,6 +304,7 @@ tag to provide extra relocations for a given vendor.
 |===
 |*Vendor*              |*Symbol*
 |Open Hardware Group   | COREV
+|Qualcomm              | QUALCOMM
 |===
 
 === List of vendor extensions
@@ -319,6 +321,21 @@ tag to provide extra relocations for a given vendor.
 |OpenHW  | Xcvmac          | 1.0.0          | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
 |OpenHW  | Xcvmem          | 1.0.0          | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
 |OpenHW  | Xcvsimd         | 1.0.0          | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+|Qualcomm | Xqcia          | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqciac         | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcibi         | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcibm         | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcicli        | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcicm         | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcics         | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcicsr        | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqciint        | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcilb         | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcili         | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcilia        | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcilo         | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcilsm        | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
+|Qualcomm | Xqcisls        | 0.1.0          | https://github.com/quic/riscv-unified-db/releases/latest[Qualcomm Microcontoller Extensions Specification]
 |SiFive  | XSFvqmaccdod    | 1.0            | https://www.sifive.com/document-file/sifive-int8-matrix-multiplication-extensions-specification[SiFive Int8 Matrix Multiplication Extensions Specification]
 |SiFive  | XSFvqmaccqoq    | 1.0            | https://www.sifive.com/document-file/sifive-int8-matrix-multiplication-extensions-specification[SiFive Int8 Matrix Multiplication Extensions Specification]
 |SiFive  | XSFvfnrclipxfqf | 1.0            | https://www.sifive.com/document-file/fp32-to-int8-ranged-clip-instructions[FP32-to-int8 Ranged Clip Instructions (Xsfvfnrclipxfqf) Extension Specification]
