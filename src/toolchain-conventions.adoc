@@ -323,6 +323,7 @@ separated by a dot, e.g., `th.vxrm`.
 |Tenstorrent            | tt              | https://www.tenstorrent.com/
 |Ventana Micro Systems  | vt              | https://www.ventanamicro.com/
 |Nuclei                 | xl              | https://nucleisys.com/
+|MIPS                   | mips            | https://mips.com/
 |===
 
 NOTE: Vendor prefixes are case-insensitive.
@@ -377,6 +378,8 @@ tag to provide extra relocations for a given vendor.
 |T-Head  | XTheadSync      | 1.0            | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
 |T-Head  | XTheadVector    | 1.0            | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
 |Ventana | XVentanaCondOps | 1.0            | https://github.com/ventanamicro/ventana-custom-extensions/releases/download/v1.0.0/ventana-custom-extensions-v1.0.0.pdf[VTx-family custom instructions]
+|MIPS    | Xmipscmove      | 1.0            | https://mips.com/products/hardware/p8700/[MIPS p8700 specification]
+|MIPS    | Xmipslsp        | 1.0            | https://mips.com/products/hardware/p8700/[MIPS p8700 specification]
 |===
 
 NOTE: Vendor extension names are case-insensitive, CamelCase is used here
