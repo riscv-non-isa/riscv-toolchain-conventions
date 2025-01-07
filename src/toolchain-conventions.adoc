@@ -218,9 +218,9 @@ when the option `-mllvm -save-restore-tailcall` is specified.
 
 == Profile-based format
 
-Profiles should be recognized and used in the `-march=` option. The benefit of using
-the `-march` option is easy for toolchain parsing the profiles string and expanding
-it into normal extensions combinations. 
+Profiles name will be a valid list of released profiles, it should be recognized and used
+in the `-march=` option. The benefit of using the `-march` option is easy for toolchain
+parsing the profiles string and expanding it into normal extensions combinations. 
 
 Profiles format has the following BNF form `"-march="<profile-name>"_"[option-ext]*`.
 
@@ -248,6 +248,8 @@ then input other extensions. Profiles should input in the `-march` option.
 Examples:
 
 `-march=rvi20u64 -mabi=lp64` equals `-march=rv64i -mabi=lp64`
+
+`-march=rvi20u64_zbkb_zkne -mabi=lp64` equals `-march=rv64i_zbkb_zkne -mabi=lp64`
 
 `-march=rva22u32` equals `-march=rv64gcb_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_zicntr_zihpm_za64rs_zfhmin_zkt`
 
