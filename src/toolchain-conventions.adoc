@@ -224,9 +224,9 @@ parsing the profiles string and expanding it into normal extensions combinations
 
 Profiles format has the following BNF form `"-march="<profile-name>"_"[option-ext]*`.
 
-`profile-family-name ::= "i" | "m" | "a"`| "b"
+`profile-family-name ::= "i" | "m" | "a" | "b"`
 
-`profile-ratified-year-version ::= "20" | "22" | "23"
+`profile-ratified-year-version ::= "20" | "22" | "23"`
 
 `privilege-mode ::= "u" | "s" | "m"`
 
