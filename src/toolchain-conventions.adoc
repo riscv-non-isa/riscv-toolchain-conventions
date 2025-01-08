@@ -230,7 +230,9 @@ Profiles format has the following BNF form `"-march="<profile-name>"_"[option-ex
 
 `privilege-mode ::= "u" | "s" | "m"`
 
-`ISA-XLEN ::= "64" | "32"`
+`isa-xlen ::= "64" | "32"`
+
+`profile-name ::= "rv"<profile-family-name><profile-ratified-year-version><privilege-mode><isa-xlen>`
 
 `option-ext ::= 'a legal RISC-V extension name'`
 
