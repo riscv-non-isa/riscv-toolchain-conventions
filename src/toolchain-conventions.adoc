@@ -277,6 +277,7 @@ separated by a dot, e.g., `th.vxrm`.
 [%autowidth]
 |===
 |*Vendor*              |*Prefix*         |*URL*
+|Cheriot                | ct              | https://cheriot.org/
 |Open Hardware Group    | cv              | https://www.openhwgroup.org/
 |Andes                  | nds             | https://www.andestech.com/
 |SiFive                 | sf              | https://www.sifive.com/
