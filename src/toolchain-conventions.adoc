@@ -415,9 +415,10 @@ instructions to protect the program against control flow hijacking attacks.
 `-fcf-protection` is alias to `-fcf-protection=full`.
 
 - `none`: Disable control flow protection.
-- `full`: Protect all control flow instructions, will enable branch protection
-  and return protection if the `Zimop` extension is available.
-- `branch`: Protect branch instructions only by insert landing pad.
+- `full`: Protects all control flow instructions. Branch protection does not
+  require the `Zimop` extension, but return protection will be enabled only if
+  `Zimop` is available.
+- `branch`: Protect branch instructions only by inserting landing pad.
 - `return`: Protect return instructions only, this require `Zimop` extension.
 
 === `-mcf-branch-label-scheme=[unlabeled|func-sig]`
