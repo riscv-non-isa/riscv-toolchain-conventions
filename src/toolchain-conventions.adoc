@@ -280,6 +280,7 @@ separated by a dot, e.g., `th.vxrm`.
 |Cheriot                | ct              | https://cheriot.org/
 |Open Hardware Group    | cv              | https://www.openhwgroup.org/
 |Andes                  | nds             | https://www.andestech.com/
+|Rivos                  | rv              | https://www.rivosinc.com/
 |SiFive                 | sf              | https://www.sifive.com/
 |T-Head                 | th              | https://www.t-head.cn/
 |Tenstorrent            | tt              | https://www.tenstorrent.com/
