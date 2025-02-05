@@ -222,7 +222,7 @@ Profiles names will be a valid list of released profiles, it should be recognize
 in the `-march=` option. The benefit of using the `-march` option is easy for toolchain
 parsing the profiles string and expanding it into normal extensions combinations. 
 
-Profiles format has the following BNF form `"-march="<profile-name>"_"[option-ext]*`.
+Profiles format has the following BNF form `"-march="<profile-name>["_"option-ext]*`.
 
 `profile-name ::= 'profile-name-in-lowercase'`
 
