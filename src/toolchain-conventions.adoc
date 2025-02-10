@@ -282,6 +282,7 @@ separated by a dot, e.g., `th.vxrm`.
 |Andes                  | nds             | https://www.andestech.com/
 |Rivos                  | ri              | https://www.rivosinc.com/
 |SiFive                 | sf              | https://www.sifive.com/
+|SpacemiT               | smt             | https://www.spacemit.com/
 |T-Head                 | th              | https://www.t-head.cn/
 |Tenstorrent            | tt              | https://www.tenstorrent.com/
 |Ventana Micro Systems  | vt              | https://www.ventanamicro.com/
