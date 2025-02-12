@@ -281,6 +281,7 @@ separated by a dot, e.g., `th.vxrm`.
 |Open Hardware Group    | cv              | https://www.openhwgroup.org/
 |Andes                  | nds             | https://www.andestech.com/
 |SiFive                 | sf              | https://www.sifive.com/
+|SpacemiT               | smt             | https://www.spacemit.com/
 |T-Head                 | th              | https://www.t-head.cn/
 |Tenstorrent            | tt              | https://www.tenstorrent.com/
 |Ventana Micro Systems  | vt              | https://www.ventanamicro.com/
