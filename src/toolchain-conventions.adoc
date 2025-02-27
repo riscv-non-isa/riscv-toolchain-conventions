@@ -314,6 +314,7 @@ separated by a dot, e.g., `th.vxrm`.
 |Cheriot                | ct              | https://cheriot.org/
 |Open Hardware Group    | cv              | https://www.openhwgroup.org/
 |Andes                  | nds             | https://www.andestech.com/
+|Qualcomm               | qc              | https://www.qualcomm.com/
 |Rivos                  | ri              | https://www.rivosinc.com/
 |SiFive                 | sf              | https://www.sifive.com/
 |SpacemiT               | smt             | https://www.spacemit.com/
