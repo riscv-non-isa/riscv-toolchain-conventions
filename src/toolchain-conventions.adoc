@@ -313,6 +313,7 @@ separated by a dot, e.g., `th.vxrm`.
 |*Vendor*              |*Prefix*         |*URL*
 |Cheriot                | ct              | https://cheriot.org/
 |Open Hardware Group    | cv              | https://www.openhwgroup.org/
+|Espressif              | esp             | https://www.espressif.com/
 |Andes                  | nds             | https://www.andestech.com/
 |Qualcomm               | qc              | https://www.qualcomm.com/
 |Rivos                  | ri              | https://www.rivosinc.com/
