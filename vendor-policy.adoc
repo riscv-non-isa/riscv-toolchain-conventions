@@ -1,0 +1,40 @@
+= Vendor Prefixes and Extensions Policies
+
+== Policy for vendor prefix allocation
+The Toolchain Conventions document lists
+xref:src/toolchain-conventions.adoc#vendor-prefixes-list[the canonical RISC-V vendor prefixes]
+used in open-source projects to prevent naming collisions, especially in
+open-source toolchains. It is not meant to be an official registry but rather a
+central place for discussing and recording vendor prefix conventions.
+
+Open-source project maintainers may make pull requests against this repository
+to request the allocation of a vendor prefix.
+
+The early allocation of vendor prefixes is recognized as a measure to prevent
+conflicts in downstream implementations during extension specification
+refinement. Although presenting the vendor extension specification is not
+mandatory when requesting a vendor prefix, doing so demonstrates good faith and
+intent to refine and open-source the vendor extension specification.
+
+The Toolchain SIG reserves the right to reclaim a vendor prefix if there is
+evidence of misuse or insufficient upstreaming activity. This ensures that prefix
+allocation remains efficient and avoids unnecessary congestion.
+
+== Policy for vendor extension inclusion
+The Toolchain Conventions document includes
+xref:src/toolchain-conventions.adoc#vendor-extensions-list[a list of RISC-V vendor extensions]
+used in open-source projects, including open-source toolchains.
+It serves as an informative reference for the latest documentation on
+extensions supported by vendors.
+
+Open-source project maintainers can request the inclusion of a vendor extension
+by making a pull request against this repository.
+
+For inclusion in this list, the vendor must provide a link to the documentation
+that details the extension name, version number, instructions list, CSRs, and
+other components, along with their descriptions and functionalities. Although
+extension specifications may change over time, maintaining an updated
+specification is essential for open-source development.
+
+There are no prerequisites for implementing the vendor extensions on hardware,
+toolchain, or simulator.

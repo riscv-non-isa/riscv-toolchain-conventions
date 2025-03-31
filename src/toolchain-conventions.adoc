@@ -306,7 +306,11 @@ The vendor prefix should match the prefix defined in assembly mnemonics and be
 separated by a dot, e.g., `th.vxrm`.
 
 === List of vendor prefixes
+Please review
+https://github.com/riscv-non-isa/riscv-toolchain-conventions/blob/main/vendor-policy.adoc#policy-for-vendor-prefix-allocation[the policy for allocating vendor prefixes]
+before modifying this table.
 
+[id=vendor-prefixes-list]
 .List of vendor prefixes
 [%autowidth]
 |===
@@ -346,7 +350,11 @@ tag to provide extra relocations for a given vendor.
 |===
 
 === List of vendor extensions
+Please review
+https://github.com/riscv-non-isa/riscv-toolchain-conventions/blob/main/vendor-policy.adoc#policy-for-vendor-extension-inclusion[the policy for adding vendor extensions]
+before modifying this table.
 
+[id=vendor-extensions-list]
 .List of vendor extensions
 [cols="20,20,~"]
 |===
