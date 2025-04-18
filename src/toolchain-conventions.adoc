@@ -351,6 +351,7 @@ tag to provide extra relocations for a given vendor.
 [cols="20,20,~"]
 |===
 |*Vendor*  |*Name*         |*ISA Document*
+|Andes   | XAndesperf      | https://github.com/andestech/andes-v5-isa/releases/tag/ast-v5_4_0-release[Andes Instruction Extension Specification]
 |MIPS    | Xmipscmov       | https://mips.com/wp-content/uploads/2025/03/P8700-F_Programmers_Reference_Manual_Rev1.82_3-19-2025.pdf[MIPS P8700 Programmer's Guide]
 |MIPS    | Xmipslsp        | https://mips.com/wp-content/uploads/2025/03/P8700-F_Programmers_Reference_Manual_Rev1.82_3-19-2025.pdf[MIPS P8700 Programmer's Guide]
 |OpenHW  | Xcvalu          | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
