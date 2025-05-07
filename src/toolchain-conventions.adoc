@@ -250,6 +250,35 @@ Convention](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/ris
 whether or not a frame pointer is actually being used, and contradicts with the
 order used by Zcmp push/pop instructions.
 
+== Profile-based format
+
+Profiles names will be a valid list of released profiles, it should be recognized and used
+in the `-march=` option. The benefit of using the `-march` option is easy for toolchain
+parsing the profiles string and expanding it into normal extensions combinations. 
+
+Profiles format has the following BNF form `"-march="<profile-name>["_"option-ext]*`.
+
+`profile-name ::= 'profile-name-in-lowercase'`
+
+`option-ext ::= 'a legal RISC-V extension name'`
+
+According to the specification, profiles must adhere to the defined naming format
+for proper usage.(See [3.4 form spec doc](https://github.com/riscv/riscv-profiles)).
+The toolchain will check whether an input profile name is correct at first, then 
+do the parse work.
+
+To distinguish between ordinary extension input and input with profiles,
+profiles are assumed to be entered *at the beginning of the -march option*, and
+then input other extensions.
+
+Examples:
+
+`-march=rvi20u64 -mabi=lp64` equals `-march=rv64i -mabi=lp64`
+
+`-march=rvi20u64_zbkb_zkne -mabi=lp64` equals `-march=rv64i_zbkb_zkne -mabi=lp64`
+
+`-march=rva22u64` equals `-march=rv64gcb_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_zicntr_zihpm_za64rs_zfhmin_zkt`
+
 == Conventions for vendor extensions
 
 Support for custom instruction set extensions are an important part of RISC-V,
