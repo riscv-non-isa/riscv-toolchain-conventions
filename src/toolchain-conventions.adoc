@@ -347,6 +347,7 @@ tag to provide extra relocations for a given vendor.
 |===
 |*Vendor*              |*Symbol*
 |Open Hardware Group   | COREV
+|Qualcomm              | QUALCOMM
 |===
 
 == Common Toolchain Command Line Options
