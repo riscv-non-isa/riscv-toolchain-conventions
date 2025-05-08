@@ -6,3 +6,6 @@ include::preamble.adoc[]
 include::contributors.adoc[]
 
 include::toolchain-conventions.adoc[]
+
+[appendix]
+include::appendix.adoc[]

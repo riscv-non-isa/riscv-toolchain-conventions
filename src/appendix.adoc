@@ -1,0 +1,50 @@
+== List of vendor extensions
+Please review
+https://github.com/riscv-non-isa/riscv-toolchain-conventions/blob/main/vendor-policy.adoc#policy-for-vendor-extension-inclusion[the policy for adding vendor extensions]
+before modifying this table.
+
+[id=vendor-extensions-list]
+.List of vendor extensions
+[cols="20,20,~"]
+|===
+|*Vendor*  |*Name*         |*ISA Document*
+|Andes   | XAndesPerf      | https://github.com/andestech/andes-v5-isa/releases/tag/ast-v5_4_0-release[Andes Instruction Extension Specification]
+|MIPS    | Xmipscmov       | https://mips.com/wp-content/uploads/2025/03/P8700-F_Programmers_Reference_Manual_Rev1.82_3-19-2025.pdf[MIPS P8700 Programmer's Guide]
+|MIPS    | Xmipslsp        | https://mips.com/wp-content/uploads/2025/03/P8700-F_Programmers_Reference_Manual_Rev1.82_3-19-2025.pdf[MIPS P8700 Programmer's Guide]
+|OpenHW  | Xcvalu          | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+|OpenHW  | Xcvbi           | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+|OpenHW  | Xcvbitmanip     | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+|OpenHW  | Xcvelw          | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+|OpenHW  | Xcvhwlp         | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+|OpenHW  | Xcvmac          | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+|OpenHW  | Xcvmem          | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+|OpenHW  | Xcvsimd         | https://github.com/openhwgroup/cv32e40p/blob/dev/docs/source/instruction_set_extensions.rst[CORE-V Instruction Set Extensions]
+|SiFive  | XSFvqmaccdod    | https://www.sifive.com/document-file/sifive-int8-matrix-multiplication-extensions-specification[SiFive Int8 Matrix Multiplication Extensions Specification]
+|SiFive  | XSFvqmaccqoq    | https://www.sifive.com/document-file/sifive-int8-matrix-multiplication-extensions-specification[SiFive Int8 Matrix Multiplication Extensions Specification]
+|SiFive  | XSFvfnrclipxfqf | https://www.sifive.com/document-file/fp32-to-int8-ranged-clip-instructions[FP32-to-int8 Ranged Clip Instructions (Xsfvfnrclipxfqf) Extension Specification]
+|SiFive  | Xsfvfwmaccqqq   | https://www.sifive.com/document-file/matrix-multiply-accumulate-instruction[Matrix Multiply Accumulate Instruction (Xsfvfwmaccqqq) Extension Specification]
+|SiFive  | XSFVCP          | https://sifive.cdn.prismic.io/sifive/c3829e36-8552-41f0-a841-79945784241b_vcix-spec-software.pdf[SiFive Vector Coprocessor Interface Software Specification]
+|T-Head  | XTheadCmo       | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadBa        | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadBb        | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadBs        | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadCondMov   | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadFMemIdx   | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadFmv       | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadInt       | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadMac       | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadMemPair   | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadMemIdx    | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadSync      | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|T-Head  | XTheadVector    | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
+|Ventana | XVentanaCondOps | https://github.com/ventanamicro/ventana-custom-extensions/releases/download/v1.0.0/ventana-custom-extensions-v1.0.0.pdf[VTx-family custom instructions]
+|===
+
+NOTE: Vendor extension names are case-insensitive, CamelCase is used here
+for readability.
+
+NOTE: Additional information on the CORE-V ISA extensions can be found in the
+https://github.com/openhwgroup/core-v-sw/blob/master/specifications/corev-isa-extension-naming.md[CORE-V ISA Extension Naming]
+specification, and in the draft
+https://github.com/openhwgroup/core-v-sw/blob/master/specifications/corev-builtin-spec.md[CORE-V Builtin Function]
+specification.
