@@ -1,3 +1,17 @@
+== Target Triples
+
+The toolchains have agreed on the following architecture names to be used for
+RISC-V in the first segment of target triples:
+
+- `riscv32` RV32, little-endian
+- `riscv32be` RV32, big-endian
+- `riscv64` RV64, little-endian
+- `riscv64be` RV64, big-endian
+
+For example, `riscv32-unknown-none-elf` denotes 32-bit RISC-V, little-endian,
+from an unknown vendor, for no Operating System (baremetal), following the ELF
+ABI.
+
 == Specifying the target ISA with -march
 
 The compiler and assembler both accept the `-march` flag to specify the target
