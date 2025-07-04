@@ -1,7 +1,7 @@
-== Target Triples
+== Target Triplets
 
-The toolchains have agreed on the following architecture names to be used for
-RISC-V in the first segment of target triples:
+The following architecture names are used for RISC-V in the first segment of
+target triplets:
 
 - `riscv32` RV32, little-endian
 - `riscv32be` RV32, big-endian
@@ -9,7 +9,7 @@ RISC-V in the first segment of target triples:
 - `riscv64be` RV64, big-endian
 
 For example, `riscv32-unknown-none-elf` denotes 32-bit RISC-V, little-endian,
-from an unknown vendor, for no Operating System (baremetal), following the ELF
+from an unknown vendor, for no operating system (baremetal), following the ELF
 ABI.
 
 == Specifying the target ISA with -march
