@@ -376,6 +376,7 @@ tag to provide extra relocations for a given vendor.
 [%autowidth]
 |===
 |*Vendor*              |*Symbol*
+|Andes                 | ANDES
 |Open Hardware Group   | COREV
 |Qualcomm              | QUALCOMM
 |===
