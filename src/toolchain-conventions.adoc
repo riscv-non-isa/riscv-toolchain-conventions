@@ -8,6 +8,40 @@ e.g. `-march=rv64g`. A target `-march` which includes floating point
 instructions implies a hardfloat calling convention, but can be overridden
 using the `-mabi` flag (see the next section).
 
+In addition to regular ISA strings, `-march=` also accepts `unset`, whose
+behavior is: `-march=unset` causes the compiler to ignore any `-march=...`
+options that appear earlier on the command line, behaving as if the option was
+never passed. This is useful for ensuring that the architecture is taken from
+the `-mcpu` option, and it will result in an error if no `-mcpu` option
+is given when `-march=unset` is used.
+
+Examples:
+
+[source, shell]
+----
+# Basic usage: ignores earlier -march and uses -mcpu
+gcc -march=rv64i -march=unset -mcpu=sifive-x280 file.c
+# Result: Uses architecture from sifive-x280 CPU definition
+
+# Multiple -march options before unset are all ignored
+gcc -march=rv64g -march=rv32i -march=unset -mcpu=sifive-x280 file.c
+# Result: Uses architecture from sifive-x280 CPU definition
+
+# -march after unset takes precedence
+gcc -march=rv64i -march=unset -mcpu=sifive-x280 -march=rv64g file.c
+# Result: Uses rv64g (later -march overrides unset behavior)
+
+# Multiple unset operations
+gcc -march=rv64i -march=unset -mcpu=sifive-x280 -march=rv32i -march=unset file.c
+# Result: Uses architecture from sifive-x280 CPU definition
+
+----
+
+NOTE: If `-mcpu` is not provided when using `-march=unset`, the compiler may
+      generate an error.
+
+NOTE: `-march=unset` is only supported by newer toolchian (e.g. GCC 16+, clang/LLVM 22+).
+
 The ISA subset naming conventions and canonical order are described in
 Chapter `ISA Extension Naming Conventions` of the RISC-V user-level ISA
 specification. However, tools do not currently follow this specification
