@@ -203,6 +203,65 @@ RISC-V psABI has a contain sections to describe the code model:
 - https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#large-code-model[Large code model]: -mcmodel=large
 - https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc#medium-position-independent-code-model[Medium position independent code model]:  -fpic, -fPIC, -fpie or -fPIE.
 
+== Specifying tuning processor and tuning features with -mtune
+
+Compilers accept the `-mtune` flag to specify the tuning processor model and
+features. They allow users to compile with the assumption of certain performance
+characteristics. Tuning processors and tuning features should not affect any of
+the _architectural_ properties or behaviors.
+
+The `-mtune` flag accepts the following syntax: `-mtune=<tune-cpu>[":"<tune-features>]?`,
+in which
+[source]
+----
+tune-cpu      ::= 'tuning CPU name in lower case'
+tune-features ::= directive ["," directive]*
+----
+A *directive* can and can only _amend_ or _subtract_ a certain tuning
+feature from the tuning CPU. For example, given a tuning CPU `sifive-x280` that
+assumes DLEN being half of VLEN, `-mtune=sifive-x280:no-dlen-factor-2` delivers
+the same set of performance characteristics as `sifive-x280` except it no longer
+assumes DLEN being half of VLEN. In other words, `no-dlen-factor-2` is a directive
+that _subtracts_ tuning feature. Directives of this kind are also know as
+*negative directive*.
+A **positive directive**, on the other hand, adds an additional tuning feature onto the
+tuning CPU. For example, `-mtune=sifive-x280:single-element-vec-fp64` gives you
+performance characteristics that are a union of that of `sifive-x280` and `single-element-vec-fp64`,
+which assumes certain FP64 vector operations to produce a single element per cycle.
+The `single-element-vec-fp64` in this case is a positive directive.
+
+The tuning features amended by positive directives in a tune feature string cannot
+overlap with tuning features subtracted by negative directives in the same string.
+This mandate applies to explicitly induced tuning features as well as tuning
+features that are implied _implicitly_. For example, `enable-foo` and `disable-foo`
+are the positive and negative directives of feature `foo`, respecitvely, and the
+presence of `foo` implies the presence of another tuning feature `bar`. Tuning
+feature `bar`, on the other hand, is dictated by positive directive `enable-bar`
+and negative directive `disable-bar`. Given this context:
+
+`-mtune=sifive-x280:enable-foo` is a valid string, obviously. This results in both `foo`
+and `bar` being added on top of `sifive-x280` 's performance characteristics.
+
+`-mtune=sifive-x280:disable-bar` is a valiad string. This results in both `foo` and `bar`
+being _subtracted_ from `sifive-x280` 's performance characteristics.
+
+`-mtune=sifive-x280:enable-foo,disable-foo` is invalid. We do not allow these directives
+to "cancel out" each other.
+
+`-mtune=sifive-x280:enable-foo,enable-foo` is invalid. We do not allow more than one
+occurrence of the same directive.
+
+`-mtune=sifive-x280:enable-foo,disable-bar` is invalid. The `bar` produced by `enable-foo`
+cannot be canceled out by `disable-bar`.
+
+This _non-overlapping_ rule is a deliberated decision to simplify the logics and prevent
+this from becoming unmanageable in the future.
+
+It is worth noting that the actual tuning feature name is an implementation detail -- it
+can be completely different from its directive names, which are public interface agreed among
+different compilers. For example, a tuning feature `foo` can be dictated by directives
+`enable-xyz` and `disable-xyz`.
+
 == Disassembler (objdump) behaviour
 
 A RISC-V ELF binary is not currently self-describing, in the sense that it
