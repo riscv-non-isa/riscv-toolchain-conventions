@@ -205,62 +205,75 @@ RISC-V psABI has a contain sections to describe the code model:
 
 == Specifying tuning processor and tuning features with -mtune
 
-Compilers accept the `-mtune` flag to specify the tuning processor model and
+Compilers accept the `-mtune` option to specify the tuning processor model and
 features. They allow users to compile with the assumption of certain performance
 characteristics. Tuning processors and tuning features should not affect any of
 the _architectural_ properties or behaviors.
 
-The `-mtune` flag accepts the following syntax: `-mtune=<tune-cpu>[":"<tune-features>]?`,
+The `-mtune` option accepts the following syntax: `-mtune=<tune-cpu>[":"<tune-features>]?`,
 in which
 [source]
 ----
 tune-cpu      ::= 'tuning CPU name in lower case'
+directive     ::= "[a-zA-Z0-9_-]+"
 tune-features ::= directive ["," directive]*
 ----
-A *directive* can and can only _amend_ or _subtract_ a certain tuning
-feature from the tuning CPU. For example, given a tuning CPU `sifive-x280` that
-assumes DLEN being half of VLEN, `-mtune=sifive-x280:no-dlen-factor-2` delivers
-the same set of performance characteristics as `sifive-x280` except it no longer
-assumes DLEN being half of VLEN. In other words, `no-dlen-factor-2` is a directive
-that _subtracts_ tuning feature. Directives of this kind are also know as
-*negative directive*.
-A **positive directive**, on the other hand, adds an additional tuning feature onto the
-tuning CPU. For example, `-mtune=sifive-x280:single-element-vec-fp64` gives you
-performance characteristics that are a union of that of `sifive-x280` and `single-element-vec-fp64`,
-which assumes certain FP64 vector operations to produce a single element per cycle.
-The `single-element-vec-fp64` in this case is a positive directive.
+A *directive* can and can only _enable_ or _disable_ a certain tuning
+feature within the tuning model for the named CPU. For example, given a tuning
+model for the `sifive-x280` CPU that assumes DLEN (data path width in bits) being
+half of VLEN, `-mtune=sifive-x280:no-dlen-factor-2` delivers the same set of
+performance characteristics as `sifive-x280` except it no longer assumes DLEN being
+half of VLEN. In other words, `no-dlen-factor-2` is a directive that _disable_
+tuning feature. Directives of this kind are also know as *negative directive*.
+A **positive directive**, on the other hand, enables an additional tuning feature in
+the associated tuning model. For example, `-mtune=sifive-x280:single-element-vec-fp64`
+represents a set of performance characteristics that is a union of that from `sifive-x280`
+and `single-element-vec-fp64`, which assumes certain FP64 vector operations to
+produce a single element per cycle. The `single-element-vec-fp64` in this case
+is a positive directive.
 
-The tuning features amended by positive directives in a tune feature string cannot
-overlap with tuning features subtracted by negative directives in the same string.
+It is in our best interests to align the directives that are supported by multiple compilers.
+However, it is understandable that the set of supported directives might vary from
+one compiler to another. Therefore, unrecognized directives are ignored for compatibility
+reasons, and the compiler may optionally emit a warning.
+
+The tuning features enabled by positive directives in a tune feature string cannot
+overlap with tuning features disabled by negative directives in the same string.
 This mandate applies to explicitly induced tuning features as well as tuning
-features that are implied _implicitly_. For example, `enable-foo` and `disable-foo`
-are the positive and negative directives of feature `foo`, respecitvely, and the
-presence of `foo` implies the presence of another tuning feature `bar`. Tuning
-feature `bar`, on the other hand, is dictated by positive directive `enable-bar`
-and negative directive `disable-bar`. Given this context:
+features that are implied _implicitly_. For example, `short-forward-branch-opt`
+and `no-short-forward-branch-opt` are the positive and negative directives for
+feature `short-forward-branch-opt`, respectively. The presence of _feature_
+`short-forward-branch-opt` implies the presence of two other tuning features,
+`short-forward-branch-i-mul` and `short-forward-branch-i-minmax`.
+Both of these two implied features follow a similar naming convention for their
+directives: for example, `no-short-forward-branch-i-minmax` is the negative
+directive for feature `short-forward-branch-i-minmax`.
+Given this context, we have the following examples:
 
-`-mtune=sifive-x280:enable-foo` is a valid string, obviously. This results in both `foo`
-and `bar` being added on top of `sifive-x280` 's performance characteristics.
+`-mtune=rocket:short-forward-branch-opt` is a valid string, obviously. This results
+in `short-forward-branch-opt`, `short-forward-branch-i-mul`, and `short-forward-branch-i-minmax`
+being _enabled_ among `rocket` 's existing performance characteristics.
 
-`-mtune=sifive-x280:disable-bar` is a valiad string. This results in both `foo` and `bar`
-being _subtracted_ from `sifive-x280` 's performance characteristics.
+`-mtune=rocket:no-short-forward-branch-i-mul` is a valiad string. This results in
+both `short-forward-branch-i-mul` and `short-forward-branch-opt` being _disabled_
+from `rocket` 's performance characteristics.
 
-`-mtune=sifive-x280:enable-foo,disable-foo` is invalid. We do not allow these directives
-to "cancel out" each other.
+`-mtune=rocket:short-forward-branch-opt,no-short-forward-branch-opt` is *invalid*.
+We do not allow these directives to "cancel out" each other.
 
-`-mtune=sifive-x280:enable-foo,enable-foo` is invalid. We do not allow more than one
-occurrence of the same directive.
+`-mtune=rocket:short-forward-branch-opt,short-forward-branch-opt` is *invalid*.
+We do not allow more than one occurrence of the same directive.
 
-`-mtune=sifive-x280:enable-foo,disable-bar` is invalid. The `bar` produced by `enable-foo`
-cannot be canceled out by `disable-bar`.
+`-mtune=rocket:short-forward-branch-opt,no-short-forward-branch-i-mul` is *invalid*.
+The `short-forward-branch-i-mul` produced by `short-forward-branch-opt` cannot
+be canceled out by `no-short-forward-branch-i-mul`.
 
 This _non-overlapping_ rule is a deliberated decision to simplify the logics and prevent
 this from becoming unmanageable in the future.
 
 It is worth noting that the actual tuning feature name is an implementation detail -- it
-can be completely different from its directive names, which are public interface agreed among
-different compilers. For example, a tuning feature `foo` can be dictated by directives
-`enable-xyz` and `disable-xyz`.
+can be completely different from its directive names. For example, a tuning feature
+`foo` can be dictated by directives `xyz` and `no-xyz`.
 
 == Disassembler (objdump) behaviour
 
