@@ -276,15 +276,15 @@ can be completely different from its directive names. For example, a tuning feat
 `foo` can be dictated by directives `xyz` and `no-xyz`.
 
 === List of common tuning features
-Here is a list of directives for tuning features that are currently shared by major compilers.
-Each entry starts with `<positive directive name> / <negative directive name>`, followed
-by description of the performance characteristics enabled by the positive directive.
+Here is a list of tuning features shared by GCC and Clang at this moment. Each entry
+starts with `<positive directive name> / <negative directive name>`, followed by
+description of the performance characteristics enabled by the positive directive.
 
 - `short-forward-branch-opt` / `no-short-forward-branch-opt`: Has short forward branch
 optimization, which effectively predicates instructions of certain types that follows
 immediate after a forward branch.
 - `optimized-zero-stride-load` / `no-optimized-zero-stride-load`: Vector strided loads
-with a zero stride performs fewer memory operations.
+with zero stride performs fewer memory operations.
 
 == Disassembler (objdump) behaviour
 
