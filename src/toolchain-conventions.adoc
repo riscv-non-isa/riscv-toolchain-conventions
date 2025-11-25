@@ -220,17 +220,17 @@ tune-features ::= directive ["," directive]*
 ----
 A *directive* can and can only _enable_ or _disable_ a certain tuning
 feature within the tuning model for the named CPU. For example, given a tuning
-model for the `sifive-x280` CPU that assumes DLEN (data path width in bits) being
-half of VLEN, `-mtune=sifive-x280:no-dlen-factor-2` delivers the same set of
-performance characteristics as `sifive-x280` except it no longer assumes DLEN being
-half of VLEN. In other words, `no-dlen-factor-2` is a directive that _disable_
-tuning feature. Directives of this kind are also know as *negative directive*.
-A **positive directive**, on the other hand, enables an additional tuning feature in
-the associated tuning model. For example, `-mtune=sifive-x280:single-element-vec-fp64`
-represents a set of performance characteristics that is a union of that from `sifive-x280`
-and `single-element-vec-fp64`, which assumes certain FP64 vector operations to
-produce a single element per cycle. The `single-element-vec-fp64` in this case
-is a positive directive.
+model for the `sifive-x280` CPU that has short forward branch optimization,
+`-mtune=sifive-x280:no-short-forward-branch-opt` delivers the same set of
+performance characteristics as `sifive-x280` except it no longer assumes the
+existence of short forward branch optimization. In other words, `no-short-forward-branch-opt`
+is a directive that _disables_ tuning feature. Directives of this kind are also
+known as *negative directive*. A **positive directive**, on the other hand, enables
+an additional tuning feature in the associated tuning model. For example,
+`-mtune=sifive-x280:single-element-vec-fp64` represents a set of performance
+characteristics that is a union of that from `sifive-x280` and `single-element-vec-fp64`,
+which assumes certain FP64 vector operations to produce a single element per cycle.
+The `single-element-vec-fp64` in this case is a positive directive.
 
 It is in our best interests to align the directives that are supported by multiple compilers.
 However, it is understandable that the set of supported directives might vary from
@@ -240,35 +240,35 @@ reasons, and the compiler may optionally emit a warning.
 The tuning features enabled by positive directives in a tune feature string cannot
 overlap with tuning features disabled by negative directives in the same string.
 This mandate applies to explicitly induced tuning features as well as tuning
-features that are implied _implicitly_. For example, `short-forward-branch-opt`
-and `no-short-forward-branch-opt` are the positive and negative directives for
-feature `short-forward-branch-opt`, respectively. The presence of _feature_
-`short-forward-branch-opt` implies the presence of two other tuning features,
-`short-forward-branch-i-mul` and `short-forward-branch-i-minmax`.
-Both of these two implied features follow a similar naming convention for their
-directives: for example, `no-short-forward-branch-i-minmax` is the negative
-directive for feature `short-forward-branch-i-minmax`.
+features that are implied _implicitly_. For example, `short-forward-branch-i-mul`
+and `no-short-forward-branch-i-mul` are the positive and negative directives for
+feature `short-forward-branch-i-mul` -- a specific kind of short forward branch
+optimization, respectively. Since it represents a specific kind of short forward
+branch optimization, the presence of this feature implies the presence of
+another _feature_ `short-forward-branch-opt`, which represents the general short forward
+branch optimization. This feature also follows a similar naming convention for its directives:
+`short-forward-branch-opt` for positive and `no-short-forward-branch-opt` for negative.
 Given this context, we have the following examples:
 
-`-mtune=rocket:short-forward-branch-opt` is a valid string, obviously. This results
-in `short-forward-branch-opt`, `short-forward-branch-i-mul`, and `short-forward-branch-i-minmax`
-being _enabled_ among `rocket` 's existing performance characteristics.
+`-mtune=rocket:short-forward-branch-i-mul` is a valid string, obviously. This results
+in both `short-forward-branch-i-mul` and `short-forward-branch-opt` being _enabled_
+among `rocket` 's existing performance characteristics.
 
-`-mtune=rocket:no-short-forward-branch-i-mul` is a valiad string. This results in
-both `short-forward-branch-i-mul` and `short-forward-branch-opt` being _disabled_
+`-mtune=rocket:no-short-forward-branch-opt` is a valid string. This results in
+both `short-forward-branch-opt` and `short-forward-branch-i-mul` being _disabled_
 from `rocket` 's performance characteristics.
 
-`-mtune=rocket:short-forward-branch-opt,no-short-forward-branch-opt` is *invalid*.
+`-mtune=rocket:short-forward-branch-i-mul,no-short-forward-branch-i-mul` is *invalid*.
 We do not allow these directives to "cancel out" each other.
 
-`-mtune=rocket:short-forward-branch-opt,short-forward-branch-opt` is *invalid*.
+`-mtune=rocket:short-forward-branch-i-mul,short-forward-branch-i-mul` is *invalid*.
 We do not allow more than one occurrence of the same directive.
 
-`-mtune=rocket:short-forward-branch-opt,no-short-forward-branch-i-mul` is *invalid*.
-The `short-forward-branch-i-mul` produced by `short-forward-branch-opt` cannot
-be canceled out by `no-short-forward-branch-i-mul`.
+`-mtune=rocket:short-forward-branch-i-mul,no-short-forward-branch-opt` is *invalid*.
+The `short-forward-branch-opt` implied by `short-forward-branch-i-mul` cannot
+be canceled out by `no-short-forward-branch-opt`.
 
-This _non-overlapping_ rule is a deliberated decision to simplify the logics and prevent
+This _non-overlapping_ rule is a deliberate decision to simplify the logic and prevent
 this from becoming unmanageable in the future.
 
 It is worth noting that the actual tuning feature name is an implementation detail -- it
@@ -281,10 +281,10 @@ starts with `<positive directive name> / <negative directive name>`, followed by
 description of the performance characteristics enabled by the positive directive.
 
 - `short-forward-branch-opt` / `no-short-forward-branch-opt`: Has short forward branch
-optimization, which effectively predicates instructions of certain types that follows
-immediate after a forward branch.
+optimization, which effectively predicates instructions of certain types that follow
+immediately after a forward branch.
 - `optimized-zero-stride-load` / `no-optimized-zero-stride-load`: Vector strided loads
-with zero stride performs fewer memory operations.
+with zero stride perform fewer memory operations.
 
 == Disassembler (objdump) behaviour
 
