@@ -235,7 +235,7 @@ The `single-element-vec-fp64` in this case is a positive directive.
 It is in our best interests to align the directives that are supported by multiple compilers.
 However, it is understandable that the set of supported directives might vary from
 one compiler to another. Therefore, unrecognized directives are ignored for compatibility
-reasons, and the compiler may optionally emit a warning.
+reasons, and the compiler is expected to emit a warning.
 
 The tuning features enabled by positive directives in a tune feature string cannot
 overlap with tuning features disabled by negative directives in the same string.
@@ -270,10 +270,6 @@ be canceled out by `no-short-forward-branch-opt`.
 
 This _non-overlapping_ rule is a deliberate decision to simplify the logic and prevent
 this from becoming unmanageable in the future.
-
-It is worth noting that the actual tuning feature name is an implementation detail -- it
-can be completely different from its directive names. For example, a tuning feature
-`foo` can be dictated by directives `xyz` and `no-xyz`.
 
 === List of common tuning features
 Here is a list of tuning features shared by GCC and Clang at this moment. Each entry
