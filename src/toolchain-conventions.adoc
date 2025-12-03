@@ -272,15 +272,13 @@ This _non-overlapping_ rule is a deliberate decision to simplify the logic and p
 this from becoming unmanageable in the future.
 
 === List of common tuning features
-Here is a list of tuning features shared by GCC and Clang at this moment. Each entry
+Here is a list of tuning feature(s) shared by GCC and Clang at this moment. Each entry
 starts with `<positive directive name> / <negative directive name>`, followed by
 description of the performance characteristics enabled by the positive directive.
 
 - `short-forward-branch-opt` / `no-short-forward-branch-opt`: Has short forward branch
 optimization, which effectively predicates instructions of certain types that follow
 immediately after a forward branch.
-- `optimized-zero-stride-load` / `no-optimized-zero-stride-load`: Vector strided loads
-with zero stride perform fewer memory operations.
 
 == Disassembler (objdump) behaviour
 
