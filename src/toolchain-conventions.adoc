@@ -425,7 +425,7 @@ tag to provide extra relocations for a given vendor.
 |===
 |*Vendor*              |*Symbol*
 |Andes                 | ANDES
-|Cheriot               | XCHERIOT
+|Cheriot               | CHERIOT
 |Open Hardware Group   | COREV
 |Qualcomm              | QUALCOMM
 |===
