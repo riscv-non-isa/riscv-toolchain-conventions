@@ -392,7 +392,8 @@ before modifying this table.
 .List of vendor prefixes
 [%autowidth]
 |===
-|*Vendor*              |*Prefix*         |*URL*
+|*Vendor*               |*Prefix*         |*URL*
+|AIFoundry              | aif             | https://aifoundry.org/
 |Andes                  | nds             | https://www.andestech.com/
 |Cheriot                | ct              | https://cheriot.org/
 |Espressif              | esp             | https://www.espressif.com/
