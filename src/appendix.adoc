@@ -63,6 +63,7 @@ before modifying this table.
 |T-Head  | XTheadVector    | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
 |T-Head  | XTheadVdot      | https://github.com/T-head-Semi/thead-extension-spec/releases/latest[T-Head ISA extension specification]
 |Ventana | XVentanaCondOps | https://github.com/ventanamicro/ventana-custom-extensions/releases/download/v1.0.0/ventana-custom-extensions-v1.0.0.pdf[VTx-family custom instructions]
+|Qinheng | XWchc           | http://web.archive.org/web/20251121133229/https://discourse.llvm.org/t/rfc-supporting-wch-qingke-xw-compressed-opcodes/79392/12[Encoding of XW compressed opcodes]
 |===
 
 NOTE: Vendor extension names are case-insensitive, CamelCase is used here

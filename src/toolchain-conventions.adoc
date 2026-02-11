@@ -407,6 +407,7 @@ before modifying this table.
 |T-Head                 | th              | https://www.t-head.cn/
 |Tenstorrent            | tt              | https://www.tenstorrent.com/
 |Ventana Micro Systems  | vt              | https://www.ventanamicro.com/
+|Qinheng                | wch             | https://www.wch.cn/
 |===
 
 NOTE: Vendor prefixes are case-insensitive.
