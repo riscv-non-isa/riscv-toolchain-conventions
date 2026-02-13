@@ -12,6 +12,19 @@ For example, `riscv32-unknown-none-elf` denotes 32-bit RISC-V, little-endian,
 from an unknown vendor, for no operating system (baremetal), following the ELF
 ABI.
 
+=== Emulation Names
+
+GNU LD and LLD support the `-m` option for specifying an emulation, rather than
+a target triple. The following emulation names are used for RISC-V:
+
+- `elf32lriscv` RV32, little-endian
+- `elf32briscv` RV32, big-endian
+- `elf64lriscv` RV64, little-endian
+- `elf64briscv` RV64, big-endian
+
+GNU LD has historic support for emulations with a suffix matching the ABI (e.g.
+`elf64lriscv_ilp32f`) but these are not used by Clang/LLD.
+
 == Specifying the target ISA with -march
 
 The compiler and assembler both accept the `-march` flag to specify the target
