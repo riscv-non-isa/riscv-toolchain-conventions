@@ -140,6 +140,71 @@ Examples:
 
 `-march=rva22u64` equals `-march=rv64gcb_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_zicntr_zihpm_za64rs_zfhmin_zkt`
 
+== Specifying the target CPU with -mcpu
+
+The `-mcpu=<name>[+[no]<extension>+...]` option uses the architecture of and optimizes the output for the given RISC-V processor.
+
+- The target RISC-V architecture (as if specified by `-march`)
+- The RISC-V processor type for which to tune for performance (as if specified by `-mtune`)
+
+Note that `-mcpu` does not override `-march` or `-mtune`.
+
+Many RISC-V processors implement optional architectural extensions. By default,
+all supported extensions for the specified CPU are enabled. However, if implementations
+that lack certain extensions exist, the extension syntax can be used to disable
+those extensions that have been omitted.
+
+=== Extension control syntax
+
+The extension control syntax follows the ARM convention:
+
+- `+extension`: Enables the extension if it is disabled by default. Has no effect if the extension is already enabled by default.
+- `+noextension`: Disables the extension if it is enabled by default. Has no effect if the extension is already disabled by default.
+
+Use `+extension` or `+noextension` to explicitly enable or disable an optional RISC-V extension.
+You can specify one or more extensions that a processor supports.
+
+Common extension control options include:
+
+- `+nof`: Disables single-precision floating-point instructions (F extension) and any extensions that depend on it, such as the D extension (double-precision floating-point)
+- `+nod`: Disables double-precision floating-point instructions (D extension)
+- `+nov`: Disables vector instructions (V extension)
+- `+noc`: Disables compressed instruction support (C extension)
+- `+nozicsr`: Disables Zicsr extension
+- `+nozifencei`: Disables Zifencei extension
+- `+v+zvl256b`: Enables vector instructions (V extension) with 256-bit vector length (Zvl256b extension)
+
+The `-mcpu` option supports enabling or disabling any valid RISC-V extension using the `+extension` or `+noextension` syntax. The examples above illustrate commonly used extensions, but the mechanism applies to all standard and vendor-specific RISC-V extensions.
+
+When specifying conflicting extension modifiers with `-mcpu`, the rightmost extension is used.
+For example, the following command enables single-precision floating-point instructions:
+`gcc -mcpu=xt-c908+nof+f file.c`
+
+=== Examples
+
+[source, shell]
+----
+# Basic usage: specify target CPU
+gcc -mcpu=xt-c908 file.c
+
+# Disable single-precision floating-point (F extension)
+# Note: D extension (double-precision) is also disabled due to F dependency
+gcc -mcpu=xt-c908+nof file.c
+
+# Enable vector extension and Zvfh (half-precision vector float)
+# This configuration is equivalent to xt-c908v
+gcc -mcpu=xt-c908+v+zvfh file.c
+
+# Conflicting modifiers: rightmost takes precedence
+# Single-precision floating-point is enabled despite +nof
+gcc -mcpu=xt-c908+nof+f file.c
+
+# Multiple -mcpu options: last one takes precedence
+# This is equivalent to using only -mcpu=xt-c908+v+zvfh
+gcc -mcpu=xt-c910 -mcpu=xt-c908 -mcpu=xt-c908+v+zvfh file.c
+
+----
+
 == Specifying the target ABI with -mabi
 
 - https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32[`ilp32`]:
