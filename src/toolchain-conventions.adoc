@@ -140,6 +140,56 @@ Examples:
 
 `-march=rva22u64` equals `-march=rv64gcb_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_zicntr_zihpm_za64rs_zfhmin_zkt`
 
+== Specifying the target CPU with -mcpu
+
+The `-mcpu=<name>[+<extension>]*` option uses the architecture of and optimizes the output for the given RISC-V processor.
+
+- The target RISC-V architecture (as if specified by `-march`)
+- The RISC-V processor type for which to tune for performance (as if specified by `-mtune`)
+
+Note that `-mcpu` does not override `-march` or `-mtune`.
+
+RISC-V processors may support optional architectural extensions beyond their base configuration. The `-mcpu` option uses the base configuration defined for the specified CPU, and additional extensions can be enabled using the `+extension` syntax.
+
+=== Extension control syntax
+
+The extension control syntax uses a `+extension` format to enable optional RISC-V extensions:
+
+- `+extension`: Enables the extension if it is not already enabled by default.
+
+Use `+extension` to explicitly enable an optional RISC-V extension.
+You can specify one or more extensions that a processor supports.
+
+Common extension control options include:
+
+- `+f`: Enables the F extension (single-precision floating-point)
+- `+d`: Enables the D extension (double-precision floating-point)
+- `+v`: Enables the V extension (vector instructions)
+- `+zvl256b`: Enables the Zvl256b extension (256-bit vector length)
+- `+zvfh`: Enables the Zvfh extension (half-precision vector floating-point)
+
+The `-mcpu` option supports enabling any valid RISC-V extension using the `+extension` syntax. The examples above illustrate commonly used extensions, but the mechanism applies to all standard and vendor-specific RISC-V extensions.
+
+Extensions can be specified in any order. The toolchain will handle extension ordering according to RISC-V ISA rules. For consistency and clarity, it is recommended to follow the canonical order used in `Tag_RISCV_arch`: single-letter extensions first, followed by multi-letter extensions in alphabetical order, with each extension prefixed by `+`.
+
+=== Examples
+
+[source, shell]
+----
+# Basic usage: specify target CPU
+gcc -mcpu=xt-c908 file.c
+
+# Enable vector extension and Zvfh (half-precision vector float)
+# This configuration is equivalent to xt-c908v
+gcc -mcpu=xt-c908+v+zvfh file.c
+
+# Multiple extensions (canonical order recommended)
+gcc -mcpu=xt-c908+v+zvl256b+zvfh file.c
+
+# Use with -march=unset to prioritize -mcpu architecture
+gcc -march=rv64i -march=unset -mcpu=xt-c908+v+zvfh file.c
+----
+
 == Specifying the target ABI with -mabi
 
 - https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32[`ilp32`]:
