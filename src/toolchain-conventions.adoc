@@ -486,6 +486,22 @@ NOTE: This option does not affect inline assembly.
 The precedence among `-m[no]-scalar-strict-align`, `-m[no-]vector-strict-align`,
 and `-m[no-]strict-align` is determined by the last one specified.
 
+=== `-mzilsd-word-align`/`-mzilsd-strict-align`
+
+Zilsd is an extension for making 64-bit accesses on RV32. As with other
+accesses, the spec only guarantees this will work for naturally-aligned accesses
+(8-byte alignment). Some RV32 cores may have a memory system that relaxes this
+requirement somewhat but not fully, allowing 4-byte aligned accesses but not
+1-byte aligned accesses.
+
+To enable this, there is the flag `-mzilsd-word-align` which allows Zilsd
+accesses to be made with 4-byte alignment, or `-mzilsd-strict-align` which
+requires Zilsd accesses to be made at their natural (8-byte) alignment.
+
+These options interact with and may be modified by `-m[no-]strict-align` and
+`-m[no-]scalar-strict-align`. Whichever is last on the command-line takes
+precedence for Zilsd accesses.
+
 === `-fcf-protection=[full|branch|return|none]`/`-fcf-protection`
 
 
