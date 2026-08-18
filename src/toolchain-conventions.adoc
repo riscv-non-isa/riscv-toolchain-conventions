@@ -35,11 +35,14 @@ e.g. `-march=rv64g`. A target `-march` which includes floating point
 instructions implies a hardfloat calling convention, but can be overridden
 using the `-mabi` flag (see the next section).
 
+The compiler may accept `-march=native` to query the ISA from the host CPU.
+This may not work for all CPUs or systems.
+
 In addition to regular ISA strings, `-march=` also accepts `unset`, whose
 behavior is: `-march=unset` causes the compiler to ignore any `-march=...`
 options that appear earlier on the command line, behaving as if the option was
 never passed. This is useful for ensuring that the architecture is taken from
-the `-mcpu` option, and it will result in an error if no `-mcpu` option
+the `-mcpu` option, and it may result in an error if no `-mcpu` option
 is given when `-march=unset` is used.
 
 Examples:
@@ -63,9 +66,6 @@ gcc -march=rv64i -march=unset -mcpu=sifive-x280 -march=rv32i -march=unset file.c
 # Result: Uses architecture from sifive-x280 CPU definition
 
 ----
-
-NOTE: If `-mcpu` is not provided when using `-march=unset`, the compiler may
-      generate an error.
 
 NOTE: `-march=unset` is only supported by newer toolchian (e.g. GCC 16+, clang/LLVM 22+).
 
@@ -186,6 +186,21 @@ impossible combinations of `-march` and `-mabi` such as `-march=rv32i` and
 
 - Should the `-mabi` string be parsed case insensitively?
 - How should the RV32E ABI be specified? `ilp32e`?
+
+== Specifying the target CPU with -mtune and -mcpu
+
+The compiler accepts the `-mtune` and `-mcpu` flags to specify the target CPU.
+The `-mtune` options tells the compiler to optimize code for the specified CPU's
+microarchitecture. It does not affect what ISA is used.
+
+The `-mcpu` option selects the ISA of the specificed CPU if no `-march` is
+provided. If no `-mtune` is provided, it also selects CPU microarchitecture to
+optimize for.
+
+The supported CPU names are implementation dependent.
+
+The compiler may accept `-mtune=native` and `-mcpu=native` to ask the compiler
+to target the host CPU. This may not work for all CPUs or systems.
 
 == Specifying the target code model with -mcmodel
 
