@@ -318,12 +318,15 @@ toolchains as of late 2026.
 
 The sequences with names that include `+_cfiss_+` must contain the `+sspush+` or
 `+sspopchk+` instructions as used by the Zicfiss extension for hardware shadow
-stack checking.
+stack checking. These must be provided in objects that are correctly marked
+(following the ABI) to denote their compatibility with the `Zicfiss` shadow
+stack mechanism.
 
 The sequences with names that include `+_swss_+` must save or restore the value
 of `ra` using the software shadow stack pointed to by `x3`. The value of `ra`
 may also need to be saved to the conventional stack to follow the frame pointer
-convention.
+convention. These must be provided in objects that are correctly marked
+(following the ABI) to denote their use of `gp` for the software shadow stack.
 
 === Save Restore Routine Stack Frame Layouts
 
