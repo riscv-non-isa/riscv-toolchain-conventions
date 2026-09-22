@@ -135,8 +135,10 @@ The `-march` flag accepts the following form when specifying a target profile:
 
 `option-ext ::= 'a legal RISC-V extension name'`
 
+The profile name is expanded to its base ISA and mandatory extensions.
+
 For a list of valid RISC-V profile names refer to the
-https://github.com/riscv/riscv-profiles[RISC-V profile specification],
+https://github.com/riscv/riscv-isa-manual/blob/main/src/profiles/profiles.adoc[RISC-V profile specification],
 which also discusses the naming convention.
 
 To distinguish between the target ISA and the target profile base formats
