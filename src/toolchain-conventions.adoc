@@ -559,7 +559,7 @@ create a table for. If this is omitted, it is treated as being `zcmt`, but
 vendors can use their own strings to denote vendor-specific variants of the
 scheme.
 
-NOTE: This option is required because the relaxation is not local, it produces a
+NOTE: This option is required because the relaxation is not local: it produces a
 single jump table used by all the relaxed instructions in the executable, so the
 linker needs to know which kind of table to create if these are incompatible.
 
