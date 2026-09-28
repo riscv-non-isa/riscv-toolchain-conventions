@@ -272,9 +272,9 @@ The assembler will produce compressed instructions whenever possible if the
 targeted RISC-V variant includes support for the 'C' compressed instruction
 set.
 
-=== Issues for consideration
-* There is currently no way to enable support for the 'C' ISA extension, but to
-disable the automatic 'compression' of instructions.
+Newer assemblers have `.option exact` which prevents compression and relaxation
+without changing the enabled architecture. This ensures the toolchain will not
+change the written sequence.
 
 == C/C++ preprocessor definitions
 
