@@ -119,9 +119,6 @@ for backward compatibility.
 and `rv64`.
 - Whether the `-march` string should be parsed case insensitively.
 - Exposing the ability to specify version numbers for a target extension.
-- Specifying non-standard extensions. The ISA specification suggests naming
-such as `rv32gXfirstext_Xsecondext`. In GCC or Clang it would be more
-conventional to give a string such as `rv32g+firstext+secondext`.
 
 == Specifying the target profile with -march
 
@@ -166,6 +163,10 @@ Examples:
 - https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32d[`ilp32d`]:
   int, long, pointers are 32-bit. GPRs, 64-bit FPRs and the stack are
   used for parameter passing.
+- https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-ilp32e[`ilp32e`]:
+  int, long, pointers are 32-bit. GPRs and the stack are used for parameter
+  passing. Only GPRs x0 to x15 are used for values (for compatiblity with
+  `RV32E`), and the stack has a lower alignment to the other ABIs.
 - https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-cc.adoc#abi-lp64[`lp64`]:
   long, pointers are 64-bit. GPRs and the the stack are used for
   parameter passing.
@@ -187,7 +188,6 @@ impossible combinations of `-march` and `-mabi` such as `-march=rv32i` and
 === Issues for consideration
 
 - Should the `-mabi` string be parsed case insensitively?
-- How should the RV32E ABI be specified? `ilp32e`?
 
 == Specifying the target CPU with -mtune and -mcpu
 
@@ -254,11 +254,6 @@ between compressed (16-bit) instructions and their 32-bit equivalent. e.g.
 
 === Issues for consideration
 
-- The current GNU objdump behaviour will not provide useful results for cases
-where non-standard extensions are implemented which reuse some of the standard
-extension's encoding space. Making RISC-V ELF files self-describing (as
-discussed https://github.com/riscv-non-isa/riscv-elf-psabi-doc/pull/47[here])
-would avoid this problem.
 - Would it be useful to have separate flags that control the printing of
 pseudoinstructions and whether compressed instructions are printed directly or
 not?
@@ -272,9 +267,9 @@ The assembler will produce compressed instructions whenever possible if the
 targeted RISC-V variant includes support for the 'C' compressed instruction
 set.
 
-=== Issues for consideration
-* There is currently no way to enable support for the 'C' ISA extension, but to
-disable the automatic 'compression' of instructions.
+Newer assemblers have `.option exact` which prevents compression and relaxation
+without changing the enabled architecture. This ensures the toolchain will not
+change the written sequence.
 
 == C/C++ preprocessor definitions
 
