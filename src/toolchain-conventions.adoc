@@ -204,6 +204,11 @@ The supported CPU names are implementation dependent.
 The compiler may accept `-mtune=native` and `-mcpu=native` to ask the compiler
 to target the host CPU. This may not work for all CPUs or systems.
 
+NOTE: We recommend including the vendor name in the CPU name or tune value
+following the patterns `-mcpu=<vendor>-<model/series>` or
+`-mtune=<vendor>-<model/series>`, as has been done for e.g. `-mcpu=sifive-x280`
+or `-mtune=andes-25-series`.
+
 == Specifying the target code model with -mcmodel
 
 The target code model indicates constraints on symbols which the compiler can
